@@ -1,11 +1,12 @@
-import {Text, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native';
 import {ButtonProps} from './types';
+import * as Styled from './styles';
 
 const Button = ({children}: ButtonProps) => {
   return (
-    <TouchableOpacity>
+    <Styled.Button>
       <Text>{children}</Text>
-    </TouchableOpacity>
+    </Styled.Button>
   );
 };
 
