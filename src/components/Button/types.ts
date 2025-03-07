@@ -5,4 +5,4 @@ export interface ButtonProps extends TouchableOpacityProps {
   fullWidth?: boolean;
 }
 
-export interface ButtonStyleProps extends Pick<ButtonProps, 'fullWidth'> {}
+export type ButtonStyleProps = Pick<ButtonProps, 'fullWidth'>;
