@@ -4,7 +4,7 @@ import {useState} from 'react';
 import {Text} from 'react-native';
 import {Button} from '../../../components/Button';
 
-function RegistrerTicket() {
+function RegisterTicket() {
   const [plate, setPlate] = useState('');
 
   return (
@@ -19,4 +19,4 @@ function RegistrerTicket() {
   );
 }
 
-export default RegistrerTicket;
+export default RegisterTicket;
