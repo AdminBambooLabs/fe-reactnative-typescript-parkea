@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
 
-export const Wrapper = styled.ScrollView`
+export const Wrapper = styled.View`
+  width: 100%;
+  border: 1px solid black;
   padding: 16px;
-  height: 100%;
 `;
 
 export const Text = styled.Text`
