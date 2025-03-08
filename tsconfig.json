@@ -4,5 +4,8 @@
     "types": ["@types/styled-components-react-native"],
     "strict": true,
     "jsx": "react-native",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }

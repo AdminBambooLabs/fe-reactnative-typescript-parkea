@@ -1,10 +1,10 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStaticNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {createStaticNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {ParkingResume} from './src/pages/ParkingResume';
-import {RegisterTicket} from './src/pages/Tickets/RegisterTicket';
+import { ParkingResume } from '@/screens/ParkingResume';
+import { RegisterTicket } from '@/screens/Tickets/RegisterTicket';
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
