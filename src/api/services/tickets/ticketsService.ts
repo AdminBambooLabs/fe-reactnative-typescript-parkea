@@ -1,12 +1,16 @@
 import { GetTicketsParams, GetTicketsResponse, ITicket } from './types';
 import { api } from '../../api';
 
+import mockGetTickets from "@/../mocks/getTickets.json"
+
 export function getTickets({ ticketId }: GetTicketsParams = {}) {
-  const response = api.get<GetTicketsResponse>(
-    `/tickets${ticketId ? `/${ticketId}` : ''}`,
-  );
-  console.log('getTickets', response)
-  return response;
+  // const response = api.get<GetTicketsResponse>(
+  //   `/tickets${ticketId ? `/${ticketId}` : ''}`,
+  // );
+  // console.log('getTickets', response)
+  // return response;
+
+  return { data: mockGetTickets, status: 200 };
 }
 
 export function postTicket(ticket: Partial<ITicket> = {}) {

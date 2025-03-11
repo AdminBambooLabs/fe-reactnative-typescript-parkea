@@ -9,6 +9,7 @@ export const CustomButton = styled(TouchableOpacity)`
   justify-content: center;
   padding: 16px;
   background-color: black;
+  border-radius: 24px;
 `;
 
 export const CustomButtonText = styled(Text)`

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
   GetTicketsParams,
-  ITicket,
   PostTicketsParams,
   getTickets,
   postTicket,
 } from '@/api/services/tickets';
+import { ITicket } from '@/types/tickets';
 
 function useFetchTickets() {
   const [tickets, setTickets] = useState<ITicket[]>([]);
