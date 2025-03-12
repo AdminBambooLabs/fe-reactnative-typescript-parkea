@@ -3,6 +3,11 @@
   "compilerOptions": {
     "types": ["@types/styled-components-react-native"],
     "strict": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "exactOptionalPropertyTypes": false, 
     "jsx": "react-native",
     "paths": {
       "@/*": ["./src/*"]

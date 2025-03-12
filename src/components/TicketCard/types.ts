@@ -1,3 +1,6 @@
-import { ITicket } from '../../api/services/tickets/types';
+import { ITicket } from "@/types/tickets";
 
-export interface TicketCardProps extends Pick<ITicket, 'plate'> {}
+export interface TicketCardProps {
+    ticket: ITicket;
+    onPress?: () => void;
+}
