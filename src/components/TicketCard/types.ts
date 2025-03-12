@@ -1,4 +1,4 @@
-import { ITicket } from '../../api/services/tickets/types';
+import { ITicket } from "@/types/tickets";
 
 export interface TicketCardProps {
     ticket: ITicket;

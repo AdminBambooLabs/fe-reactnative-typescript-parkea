@@ -19,6 +19,19 @@ export const InputContainer = styled.View`
   width: 100%;
 `;
 
+export const HoursContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Hour = styled.View`
+  display: flex;
+  flex: 1;
+`;
+
 export const Label = styled.Text`
   margin-bottom: 8px;
 `;

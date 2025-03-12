@@ -35,7 +35,7 @@ function RegisterTicket() {
           <Input value={plate} onChangeText={value => setPlate(value)} />
         </Styled.InputContainer>
         <Styled.InputContainer>
-          <Text>Tabela de preço: </Text>
+          <Styled.Label>Tabela de preço: </Styled.Label>
           <Styled.ButtonsContainer>
             <ToggleButton onPress={() => setPriceTable(EPriceTable.hourly)} active={priceTable === EPriceTable.hourly}>Horista</ToggleButton>
             <ToggleButton onPress={() => setPriceTable(EPriceTable.diarist)} active={priceTable === EPriceTable.diarist}>Diarista</ToggleButton>

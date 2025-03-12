@@ -1,16 +1,17 @@
-import { GetTicketsParams, GetTicketsResponse, ITicket } from './types';
+import { GetTicketsParams, GetTicketsResponse } from './types';
 import { api } from '../../api';
 
 import mockGetTickets from "@/../mocks/getTickets.json"
+import { ITicket } from '@/types/tickets';
 
 export function getTickets({ ticketId }: GetTicketsParams = {}) {
-  // const response = api.get<GetTicketsResponse>(
-  //   `/tickets${ticketId ? `/${ticketId}` : ''}`,
-  // );
-  // console.log('getTickets', response)
-  // return response;
+  const response = api.get<GetTicketsResponse>(
+    `/tickets${ticketId ? `/${ticketId}` : ''}`,
+  );
+  console.log('getTickets', response)
+  return response;
 
-  return { data: mockGetTickets, status: 200 };
+  // return { data: mockGetTickets, status: 200 };
 }
 
 export function postTicket(ticket: Partial<ITicket> = {}) {
@@ -18,7 +19,7 @@ export function postTicket(ticket: Partial<ITicket> = {}) {
   return response;
 }
 
-export function updateTicket(ticket: Partial<ITicket> = {}) {
-  const response = api.patch<GetTicketsResponse>('/tickets', ticket);
+export function patchTicket(ticket: Partial<ITicket> = {}, ticketId: string) {
+  const response = api.patch<GetTicketsResponse>(`/tickets/${ticketId}`, ticket);
   return response;
 }
