@@ -2,10 +2,19 @@ import styled from 'styled-components/native';
 
 export const Wrapper = styled.TouchableOpacity`
   width: 100%;
-  border: 1px solid black;
   padding: 16px;
+  height: 98px;
+  border-radius: 16px;
+  background-color: #451BED0D;
 `;
 
-export const Text = styled.Text`
+export const Title = styled.Text`
   color: black;
+  font-weight: bold;
+  font-size: 20px;
+`;
+
+export const Description = styled.Text`
+  color: #8C8C8C;
+  font-size: 16px;
 `;

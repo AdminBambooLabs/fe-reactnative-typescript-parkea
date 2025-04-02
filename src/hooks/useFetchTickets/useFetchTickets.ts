@@ -4,7 +4,8 @@ import {
   PostTicketsParams,
   getTickets,
   postTicket,
-  patchTicket
+  patchTicket,
+  deleteTicket
 } from '@/api/services/tickets';
 import { ITicket } from '@/types/tickets';
 
@@ -30,12 +31,15 @@ function useFetchTickets() {
 
   async function createTicket(ticket: PostTicketsParams) {
     try {
+      setIsLoading(true);
       const createdTicket = await postTicket({ ...ticket, status: 'open' });
-      if (createdTicket.status === 200) {
-        return postTicket({ ...ticket, status: 'open' });
+      if (createdTicket.status === 201) {
+        return createdTicket;
       }
     } catch {
       return null;
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,6 +58,23 @@ function useFetchTickets() {
     }
   }
 
+
+  async function cancelTicket(ticketId: string) {
+    try {
+      setIsLoading(true)
+      const deletedTicket = await deleteTicket(ticketId);
+      console.log('[deletedTicket', deletedTicket)
+
+      if (deletedTicket.status === 200) {
+        return deletedTicket.data
+      }
+    } catch {
+      return null;
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   useEffect(() => {
     fetchTickets();
   }, []);
@@ -62,6 +83,7 @@ function useFetchTickets() {
     fetchTickets,
     createTicket,
     updateTicket,
+    cancelTicket,
     tickets,
     isLoading,
   };
