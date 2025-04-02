@@ -6,17 +6,37 @@ import { useFetchTickets } from '@/hooks/useFetchTickets';
 import * as Styled from './styles';
 import { ToggleButton } from '@/components/ToggleButton';
 import { EPriceTable, EVehicleType, TPriceTables, TVehicleTypes } from '@/types/tickets';
+import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
 
 function RegisterTicket() {
   const [plate, setPlate] = useState('');
   const [vehicleType, setVehicleType] = useState<TVehicleTypes | undefined>();
   const [priceTable, setPriceTable] = useState<TPriceTables | undefined>();
 
-  const { createTicket } = useFetchTickets();
+  const { createTicket, isLoading } = useFetchTickets();
+  const { navigate, reset } = useLocalNavigation()
 
   async function handleCreateTicket() {
     if (!plate) return
-    if (plate && vehicleType && priceTable) await createTicket({ plate, vehicleType, priceTable });
+
+    try {
+      if (plate && vehicleType && priceTable) {
+        const cretedTicket = await createTicket({ plate, vehicleType, priceTable })
+
+        if (cretedTicket) {
+          setPlate('')
+          setVehicleType(undefined)
+          setPriceTable(undefined)
+          reset({
+            index: 0,
+            routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+          });
+        }
+      };
+    } catch {
+      // TODO: adjust catch behavior
+      return false
+    }
   }
 
   return (
@@ -45,7 +65,7 @@ function RegisterTicket() {
       </Styled.Container>
 
       <Button fullWidth onPress={handleCreateTicket}>
-        Registrar
+        {isLoading ? 'Carregando...' : 'Registrar'}
       </Button>
     </Styled.Wrapper>
   );

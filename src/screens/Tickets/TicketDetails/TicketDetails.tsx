@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { RootNavigationParamList } from '@/../App';
@@ -9,16 +9,21 @@ import { EPriceTableToLabel, EVehicleTypeToLabel } from '@/types/tickets';
 import { capitalize } from '@/utils';
 import dayjs from 'dayjs';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
+import { useNavigation } from '@react-navigation/native';
+import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
 
 function TicketDetails({ route }: NativeStackScreenProps<RootNavigationParamList, 'TicketDetails'>) {
   const { params: { ticket } } = route;
   const { plate, vehicleType, priceTable, checkin, checkout } = ticket;
-  console.log('[ticket', ticket)
 
   const { updateTicket, isLoading } = useFetchTickets()
+  const { navigate } = useLocalNavigation()
 
   async function handleRegisterCheckout() {
-    return updateTicket({ status: 'closed' }, ticket.id)
+    const updatedTicket = await updateTicket({ status: 'closed', }, ticket.id)
+    if (updatedTicket) {
+      navigate('TicketResume', { ticket: updatedTicket })
+    }
   }
 
   return (

@@ -1,17 +1,19 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStaticNavigation, NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStaticNavigation, NavigatorScreenParams } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ParkingResume } from '@/screens/ParkingResume';
 import { RegisterTicket } from '@/screens/Tickets/RegisterTicket';
-import { TicketDetails } from '@/screens/Tickets/TicketDetails';
+import { TicketDetails, TicketDetailsDeleteButton } from '@/screens/Tickets/TicketDetails';
 import { ITicket } from '@/types/tickets';
+import { TicketResume } from '@/screens/Tickets/TicketResume';
 
 export type NaviteStackParamList = {
-  Home: undefined;
+  BottomTabs: NavigatorScreenParams<BottomTabParamList>;
   TicketDetails: { ticket: ITicket };
+  TicketResume: { ticket: ITicket };
 };
 
 export type BottomTabParamList = {
@@ -21,7 +23,7 @@ export type BottomTabParamList = {
 
 export type RootNavigationParamList = NaviteStackParamList & BottomTabParamList;
 
-const HomeTabs = createBottomTabNavigator<BottomTabParamList>({
+const BottomTabs = createBottomTabNavigator<BottomTabParamList>({
   screens: {
     ParkingResume: {
       screen: ParkingResume,
@@ -35,14 +37,13 @@ const HomeTabs = createBottomTabNavigator<BottomTabParamList>({
         title: 'Registrar',
       },
     },
-
   },
 });
 
 const RootStack = createNativeStackNavigator<NaviteStackParamList>({
   screens: {
-    Home: {
-      screen: HomeTabs,
+    BottomTabs: {
+      screen: BottomTabs,
       options: {
         headerShown: false,
       },
@@ -50,7 +51,14 @@ const RootStack = createNativeStackNavigator<NaviteStackParamList>({
     TicketDetails: {
       screen: TicketDetails,
       options: {
-        title: 'Detalhe do veículo'
+        title: 'Detalhe do veículo',
+        headerRight: () => <TicketDetailsDeleteButton />
+      }
+    },
+    TicketResume: {
+      screen: TicketResume,
+      options: {
+        title: 'Resume de saída',
       }
     }
   },

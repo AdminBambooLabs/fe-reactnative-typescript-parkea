@@ -20,6 +20,11 @@ export function postTicket(ticket: Partial<ITicket> = {}) {
 }
 
 export function patchTicket(ticket: Partial<ITicket> = {}, ticketId: string) {
-  const response = api.patch<GetTicketsResponse>(`/tickets/${ticketId}`, ticket);
+  const response = api.patch<ITicket>(`/tickets/${ticketId}`, ticket);
+  return response;
+}
+
+export function deleteTicket(ticketId: string) {
+  const response = api.delete<ITicket>(`/tickets/${ticketId}`);
   return response;
 }

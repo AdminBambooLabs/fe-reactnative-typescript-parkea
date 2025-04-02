@@ -1,6 +1,6 @@
-import { HeaderBackButton } from '@react-navigation/elements';
 import styled from 'styled-components/native';
-import { CustomHeaderWrapperStyleProps } from './types';
+import { CustomHeaderWrapperStyleProps } from '../TicketDetails/types';
+import { HeaderBackButton } from '@react-navigation/elements';
 
 export const Wrapper = styled.View`
   padding: 16px;
@@ -45,17 +45,7 @@ export const ButtonsContainer = styled.View`
   gap: 8px;
 `;
 
-
-export const CustomHeaderWrapper = styled.View<CustomHeaderWrapperStyleProps>`
-  padding: 16px;
-  height: ${({ height }) => height ? `${height}px` : '100px'};
-  background-color: #fff;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`
-export const CustomHeaderButton = styled.TouchableOpacity``
-export const CustomHeaderButtonText = styled.Text`
+export const TotalText = styled.Text`
+  font-size: 32px;
   font-weight: bold;
 `
