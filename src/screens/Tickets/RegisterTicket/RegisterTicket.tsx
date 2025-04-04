@@ -14,7 +14,7 @@ function RegisterTicket() {
   const [priceTable, setPriceTable] = useState<TPriceTables | undefined>();
 
   const { createTicket, isLoading } = useFetchTickets();
-  const { navigate, reset } = useLocalNavigation()
+  const { reset } = useLocalNavigation()
 
   async function handleCreateTicket() {
     if (!plate) return
