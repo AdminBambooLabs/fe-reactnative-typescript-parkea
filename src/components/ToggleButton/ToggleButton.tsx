@@ -9,7 +9,7 @@ const ToggleButton = ({ children, active = false, onPress, ...rest }: ToggleButt
         onPress?.(!active)
       }}
       pressed={active} {...rest}>
-      <Styled.CustomToggleButtonText pressed={active}>{children}</Styled.CustomToggleButtonText>
+      <Styled.CustomToggleButtonText pressed={active} disabled={rest.disabled!}>{children}</Styled.CustomToggleButtonText>
     </Styled.CustomToggleButton>
   );
 };

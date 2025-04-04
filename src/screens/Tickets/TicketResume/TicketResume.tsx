@@ -1,4 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import ThermalPrinterModule from "react-native-thermal-printer";
+import dayjs from 'dayjs';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { RootNavigationParamList } from '@/../App';
@@ -6,12 +8,31 @@ import { ToggleButton } from '@/components/ToggleButton';
 import * as Styled from './styles';
 import { EPaymentType, EPaymentTypeToLabel, TPaymentTypes } from '@/types/tickets';
 import { capitalize } from '@/utils';
-import dayjs from 'dayjs';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
 import { useState } from 'react';
 import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
 import { formatCurrencyBRL, formatCurrencyToNumber } from '@/utils/currency';
 import { InputMask } from '@/components/InputMask';
+import { requestBluetoothPermission } from '@/utils/permissions';
+import { Alert } from 'react-native';
+import { createCheckinTicketPrintPayload, CreateCheckinTicketPrintPayloadParams } from '@/utils/print';
+
+const printCheckinTicketBT = async (args: CreateCheckinTicketPrintPayloadParams) => {
+  if (!(await requestBluetoothPermission())) return;
+
+  try {
+    const printers = await ThermalPrinterModule.getBluetoothDeviceList()
+    const printer = printers[0];
+
+    ThermalPrinterModule.defaultConfig = { ...ThermalPrinterModule.defaultConfig, macAddress: printer.macAddress };
+
+    await ThermalPrinterModule.printBluetooth({
+      payload: createCheckinTicketPrintPayload(args)
+    });
+  } catch (err) {
+    Alert.alert('Erro', JSON.stringify(err));
+  }
+};
 
 function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList, 'TicketResume'>) {
   const { params: { ticket } } = route;
@@ -78,7 +99,6 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
               placeholder='R$ 0,00'
               value={discount}
               onChangeText={(value) => {
-                console.log('value', formatCurrencyToNumber(value))
                 setDiscount(value)
               }}
               mask="R$ 999,99"
@@ -91,6 +111,9 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         </Styled.TotalText>
       </Styled.Container>
 
+      <Button fullWidth onPress={() => printCheckinTicketBT({ plate: ticket.plate, checkin: ticket.checkin })}>
+        Imprimir
+      </Button>
       <Button fullWidth onPress={handleRegisterPayment}>
         {isLoading ? 'Carregando...' : 'Confirmar'}
       </Button>

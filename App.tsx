@@ -3,12 +3,15 @@ import { SafeAreaView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStaticNavigation, NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ThemeProvider } from 'styled-components/native';
 
 import { ParkingResume } from '@/screens/ParkingResume';
 import { RegisterTicket } from '@/screens/Tickets/RegisterTicket';
 import { TicketDetails, TicketDetailsDeleteButton } from '@/screens/Tickets/TicketDetails';
-import { ITicket } from '@/types/tickets';
 import { TicketResume } from '@/screens/Tickets/TicketResume';
+
+import { theme } from '@/theme';
+import { ITicket } from '@/types/tickets';
 
 export type NaviteStackParamList = {
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
@@ -67,7 +70,7 @@ const RootStack = createNativeStackNavigator<NaviteStackParamList>({
 const Navigation = createStaticNavigation(RootStack);
 
 function App(): React.JSX.Element {
-  return <SafeAreaView style={{ flex: 1 }}><Navigation /></SafeAreaView>;
+  return <ThemeProvider theme={theme}><SafeAreaView style={{ flex: 1 }}><Navigation /></SafeAreaView></ThemeProvider>;
 }
 
 export default App;

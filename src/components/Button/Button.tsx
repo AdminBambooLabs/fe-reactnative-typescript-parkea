@@ -1,10 +1,10 @@
 import * as Styled from './styles';
 import { ButtonProps } from './types';
 
-const Button = ({ children, ...rest }: ButtonProps) => {
+const Button = ({ children, variant = 'filled', ...rest }: ButtonProps) => {
   return (
-    <Styled.CustomButton {...rest}>
-      <Styled.CustomButtonText>{children}</Styled.CustomButtonText>
+    <Styled.CustomButton variant={variant} {...rest}>
+      <Styled.CustomButtonText variant={variant} disabled={rest.disabled}>{children}</Styled.CustomButtonText>
     </Styled.CustomButton>
   );
 };
