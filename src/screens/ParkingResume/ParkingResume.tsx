@@ -5,6 +5,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootNavigationParamList } from '@/../App';
 import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
 import { View } from 'react-native';
+import { Label } from '@/components/Label';
+import { Toast } from '@/components/Toast';
 
 function ParkingResume({ route }: NativeStackScreenProps<RootNavigationParamList, "ParkingResume">) {
   const { tickets, fetchTickets, isLoading } = useFetchTickets();
@@ -12,7 +14,8 @@ function ParkingResume({ route }: NativeStackScreenProps<RootNavigationParamList
 
   return (
     <Styled.Wrapper>
-      <Styled.Text>{tickets.length} veículos no pátio: </Styled.Text>
+      <Toast title="Tabela salva com sucesso" />
+      <Label size='lg'>{tickets.length} veículos no pátio: </Label>
       <Styled.List
         data={tickets}
         refreshing={isLoading}

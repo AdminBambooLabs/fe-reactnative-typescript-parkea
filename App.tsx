@@ -12,6 +12,7 @@ import { TicketResume } from '@/screens/Tickets/TicketResume';
 
 import { theme } from '@/theme';
 import { ITicket } from '@/types/tickets';
+import { colors } from '@/theme/colors';
 
 export type NaviteStackParamList = {
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
@@ -27,6 +28,9 @@ export type BottomTabParamList = {
 export type RootNavigationParamList = NaviteStackParamList & BottomTabParamList;
 
 const BottomTabs = createBottomTabNavigator<BottomTabParamList>({
+  screenOptions: {
+    sceneStyle: { backgroundColor: colors.white }
+  },
   screens: {
     ParkingResume: {
       screen: ParkingResume,
@@ -44,6 +48,9 @@ const BottomTabs = createBottomTabNavigator<BottomTabParamList>({
 });
 
 const RootStack = createNativeStackNavigator<NaviteStackParamList>({
+  screenOptions: {
+    contentStyle: { backgroundColor: colors.white }
+  },
   screens: {
     BottomTabs: {
       screen: BottomTabs,

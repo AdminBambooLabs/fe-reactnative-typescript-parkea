@@ -3,8 +3,9 @@ import styled from 'styled-components/native';
 import { InputStyleProps } from './types';
 
 export const CustomInput = styled(TextInput) <InputStyleProps>`
-  color: black;
-  background-color: #ccc;
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 500;
+  background-color: ${({ theme }) => theme.colors.gray};
   border-radius: 24px;
   padding: 14px 16px;
   ${({ fullWidth }) => (fullWidth ? `

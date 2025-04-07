@@ -24,6 +24,6 @@ const buttonTextVariantColors: Record<ButtonVariants, keyof Colors> = {
 }
 
 export const CustomButtonText = styled(Text) <Pick<ButtonStyleProps, "variant">>`
-  color: ${({ theme, disabled, variant }) => disabled ? theme.colors.gray : theme.colors[buttonTextVariantColors[variant!]]};
+  color: ${({ theme, disabled, variant }) => disabled ? theme.colors.grayTextAlpha : theme.colors[buttonTextVariantColors[variant!]]};
   font-weight: 500;
 `;

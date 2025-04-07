@@ -8,6 +8,7 @@ export const Wrapper = styled(View)`
 `;
 
 export const List = styled(FlatList<ITicket>)`
+  margin-top: 16px;
 `;
 
 export const Text = styled.Text`
