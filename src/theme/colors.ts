@@ -1,9 +1,11 @@
 export const colors = {
     white: '#FFF',
-    black: '##2C2C2C',
+    pureBlack: '#000',
+    black: '#2C2C2C',
 
 
     gray: '#EEEEF2',
+    grayMedium: '#2C2C2C4D',
     grayDark: '#CACAD3',
     grayText: '#8C8C8C',
     grayTextAlpha: '#8C8C8C80',

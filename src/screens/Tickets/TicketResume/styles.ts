@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
-import { CustomHeaderWrapperStyleProps } from '../TicketDetails/types';
-import { HeaderBackButton } from '@react-navigation/elements';
+import { Label as CustomLabel } from '@/components/Label';
 
 export const Wrapper = styled.View`
   padding: 16px;
@@ -34,7 +33,7 @@ export const Hour = styled.View`
   flex: 1;
 `;
 
-export const Label = styled.Text`
+export const Label = styled(CustomLabel)`
   margin-bottom: 8px;
 `;
 
@@ -47,5 +46,6 @@ export const ButtonsContainer = styled.View`
 
 export const TotalText = styled.Text`
   font-size: 32px;
-  font-weight: bold;
+  font-family: ${({ theme }) => theme.fonts[700]};
+  padding: 24px 0;
 `

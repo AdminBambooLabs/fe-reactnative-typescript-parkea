@@ -12,4 +12,6 @@ export const CustomLabel = styled(Text) <LabelStylesProps>`
   color: ${({ theme }) => theme.colors.black};
   font-weight: 500;
   font-size: ${({ size }) => fontBySize[size!]};
+  font-family: ${({ theme }) => theme.fonts[600]};
+
 `

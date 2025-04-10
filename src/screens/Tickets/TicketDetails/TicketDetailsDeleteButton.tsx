@@ -3,6 +3,7 @@ import { useFetchTickets } from "@/hooks/useFetchTickets";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootNavigationParamList } from "@/../App";
 import * as Styled from "./styles"
+import { Icon } from "@/components/Icon";
 
 const TicketDetailsDeleteButton = () => {
     const { goBack } = useLocalNavigation()
@@ -16,7 +17,7 @@ const TicketDetailsDeleteButton = () => {
 
     return (
         <Styled.CustomHeaderButton onPress={handleCancelTicket}>
-            <Styled.CustomHeaderButtonText>Delete</Styled.CustomHeaderButtonText>
+            <Icon name="trash" />
         </Styled.CustomHeaderButton>
     )
 }

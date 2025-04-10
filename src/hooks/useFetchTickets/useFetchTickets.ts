@@ -51,7 +51,7 @@ function useFetchTickets() {
       if (updatedTicket.status === 200) {
         return updatedTicket.data
       }
-    } catch {
+    } catch (err) {
       return null;
     } finally {
       setIsLoading(false)

@@ -1,5 +1,4 @@
-import { Text, View } from 'react-native';
-import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { RootNavigationParamList } from '@/../App';
@@ -9,18 +8,19 @@ import { EPriceTableToLabel, EVehicleTypeToLabel } from '@/types/tickets';
 import { capitalize } from '@/utils';
 import dayjs from 'dayjs';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
-import { useNavigation } from '@react-navigation/native';
 import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
 
 function TicketDetails({ route }: NativeStackScreenProps<RootNavigationParamList, 'TicketDetails'>) {
+
   const { params: { ticket } } = route;
   const { plate, vehicleType, priceTable, checkin, checkout } = ticket;
 
-  const { updateTicket, isLoading } = useFetchTickets()
-  const { navigate } = useLocalNavigation()
+  const { updateTicket } = useFetchTickets()
+  const { navigate } = useLocalNavigation();
 
   async function handleRegisterCheckout() {
     const updatedTicket = await updateTicket({ status: 'closed', }, ticket.id)
+
     if (updatedTicket) {
       navigate('TicketResume', { ticket: updatedTicket })
     }
@@ -30,19 +30,19 @@ function TicketDetails({ route }: NativeStackScreenProps<RootNavigationParamList
     <Styled.Wrapper>
       <Styled.Container>
         <Styled.InputContainer>
-          <Styled.Label>Tipo de veículo: </Styled.Label>
+          <Styled.Label size="sm">Tipo de veículo: </Styled.Label>
           <Styled.ButtonsContainer>
             <ToggleButton active>{capitalize(EVehicleTypeToLabel[vehicleType])}</ToggleButton>
           </Styled.ButtonsContainer>
         </Styled.InputContainer>
 
         <Styled.InputContainer>
-          <Styled.Label>Placa: </Styled.Label>
+          <Styled.Label size="sm">Placa: </Styled.Label>
           <Input value={plate} readOnly />
         </Styled.InputContainer>
 
         <Styled.InputContainer>
-          <Styled.Label>Tabela de preço: </Styled.Label>
+          <Styled.Label size="sm">Tabela de preço: </Styled.Label>
           <Styled.ButtonsContainer>
             <ToggleButton active>{capitalize(EPriceTableToLabel[priceTable])}</ToggleButton>
           </Styled.ButtonsContainer>
@@ -51,19 +51,19 @@ function TicketDetails({ route }: NativeStackScreenProps<RootNavigationParamList
 
         <Styled.HoursContainer>
           <Styled.Hour>
-            <Styled.Label>Hora de entrada: </Styled.Label>
+            <Styled.Label size="sm">Hora de entrada: </Styled.Label>
             <Input placeholder='--:--' value={checkin ? dayjs(checkin).format('HH:mm') : undefined} readOnly />
           </Styled.Hour>
 
           <Styled.Hour>
-            <Styled.Label>Hora de saída: </Styled.Label>
+            <Styled.Label size="sm">Hora de saída: </Styled.Label>
             <Input placeholder='--:--' value={checkout ? dayjs(checkout).format('HH:mm') : undefined} readOnly />
           </Styled.Hour>
         </Styled.HoursContainer>
       </Styled.Container>
 
       <Button fullWidth onPress={handleRegisterCheckout}>
-        {isLoading ? 'Carregando...' : 'Registrar saída'}
+        Registrar saída
       </Button>
     </Styled.Wrapper>
   );
