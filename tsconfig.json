@@ -9,9 +9,10 @@
     "noImplicitThis": true,
     "exactOptionalPropertyTypes": false, 
     "jsx": "react-native",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "styled.d.ts"]
+  "include": ["src", "styled.d.ts", "declarations.d.ts"]
 }

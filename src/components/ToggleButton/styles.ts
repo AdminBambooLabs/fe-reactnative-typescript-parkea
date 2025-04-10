@@ -17,5 +17,6 @@ ${({ fullWidth }) => (fullWidth ? `
 
 export const CustomToggleButtonText = styled(Text) <ToggleButtonTextStyleProps>`
   color: ${({ theme, pressed }) => theme.colors[pressed ? 'white' : 'black']};
-  font-weight: 500;
+  font-family: ${({ theme }) => theme.fonts[500]};
+  font-size: 16px;
 `;

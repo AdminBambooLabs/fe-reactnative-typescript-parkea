@@ -43,7 +43,7 @@ function RegisterTicket() {
     <Styled.Wrapper>
       <Styled.Container>
         <Styled.InputContainer>
-          <Styled.Label>Tipo de veículo: </Styled.Label>
+          <Styled.Label size="sm">Tipo de veículo: </Styled.Label>
           <Styled.ButtonsContainer>
             <ToggleButton onPress={() => setVehicleType(EVehicleType.car)} active={vehicleType === EVehicleType.car}>Carro</ToggleButton>
             <ToggleButton onPress={() => setVehicleType(EVehicleType.motorcycle)} active={vehicleType === EVehicleType.motorcycle}>Moto</ToggleButton>
@@ -51,11 +51,11 @@ function RegisterTicket() {
           </Styled.ButtonsContainer>
         </Styled.InputContainer>
         <Styled.InputContainer>
-          <Styled.Label>Placa: </Styled.Label>
+          <Styled.Label size="sm">Placa: </Styled.Label>
           <Input value={plate} onChangeText={value => setPlate(value)} />
         </Styled.InputContainer>
         <Styled.InputContainer>
-          <Styled.Label>Tabela de preço: </Styled.Label>
+          <Styled.Label size="sm">Tabela de preço: </Styled.Label>
           <Styled.ButtonsContainer>
             <ToggleButton onPress={() => setPriceTable(EPriceTable.hourly)} active={priceTable === EPriceTable.hourly}>Horista</ToggleButton>
             <ToggleButton onPress={() => setPriceTable(EPriceTable.diarist)} active={priceTable === EPriceTable.diarist}>Diarista</ToggleButton>
@@ -64,7 +64,7 @@ function RegisterTicket() {
         </Styled.InputContainer>
       </Styled.Container>
 
-      <Button fullWidth onPress={handleCreateTicket}>
+      <Button disabled={!plate || !vehicleType || !priceTable} fullWidth onPress={handleCreateTicket}>
         {isLoading ? 'Carregando...' : 'Registrar'}
       </Button>
     </Styled.Wrapper>

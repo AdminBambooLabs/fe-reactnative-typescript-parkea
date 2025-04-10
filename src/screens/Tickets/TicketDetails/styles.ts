@@ -1,6 +1,6 @@
-import { HeaderBackButton } from '@react-navigation/elements';
 import styled from 'styled-components/native';
 import { CustomHeaderWrapperStyleProps } from './types';
+import { Label as CustomLabel } from '@/components/Label';
 
 export const Wrapper = styled.View`
   padding: 16px;
@@ -34,7 +34,7 @@ export const Hour = styled.View`
   flex: 1;
 `;
 
-export const Label = styled.Text`
+export const Label = styled(CustomLabel)`
   margin-bottom: 8px;
 `;
 

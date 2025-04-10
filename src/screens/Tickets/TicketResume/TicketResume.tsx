@@ -56,17 +56,17 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
       <Styled.Container>
         <Styled.HoursContainer>
           <Styled.Hour>
-            <Styled.Label>Hora de entrada: </Styled.Label>
+            <Styled.Label size="sm">Hora de entrada: </Styled.Label>
             <Input placeholder='--:--' value={checkin ? dayjs(checkin).format('HH:mm') : undefined} readOnly />
           </Styled.Hour>
           <Styled.Hour>
-            <Styled.Label>Hora de saída: </Styled.Label>
+            <Styled.Label size="sm">Hora de saída: </Styled.Label>
             <Input placeholder='--:--' value={checkout ? dayjs(checkout).format('HH:mm') : undefined} readOnly />
           </Styled.Hour>
         </Styled.HoursContainer>
 
         <Styled.InputContainer>
-          <Styled.Label>Forma de pagamento: </Styled.Label>
+          <Styled.Label size="sm">Forma de pagamento: </Styled.Label>
           <Styled.ButtonsContainer>
             <ToggleButton
               onPress={() => setPaymentType(EPaymentType.pix)}
@@ -88,12 +88,12 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
 
         <Styled.HoursContainer>
           <Styled.Hour>
-            <Styled.Label>Valor: </Styled.Label>
+            <Styled.Label size="sm">Valor: </Styled.Label>
             <Input placeholder='R$ 0,00' value={formatCurrencyBRL(ticket.total || 0)} readOnly />
           </Styled.Hour>
 
           <Styled.Hour>
-            <Styled.Label>Desconto: </Styled.Label>
+            <Styled.Label size="sm">Desconto: </Styled.Label>
             <InputMask
               keyboardType='numeric'
               placeholder='R$ 0,00'
