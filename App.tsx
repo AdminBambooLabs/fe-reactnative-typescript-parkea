@@ -1,16 +1,14 @@
 import React from 'react';
-import { Text, SafeAreaView, View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStaticNavigation, NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ThemeProvider } from 'styled-components/native';
 
 import { ParkingResume } from '@/screens/ParkingResume';
 import { RegisterTicket } from '@/screens/Tickets/RegisterTicket';
 import { TicketDetails, TicketDetailsDeleteButton } from '@/screens/Tickets/TicketDetails';
 import { TicketResume } from '@/screens/Tickets/TicketResume';
 
-import { theme } from '@/theme';
 import { ITicket } from '@/types/tickets';
 import { colors } from '@/theme/colors';
 import { TabBar } from '@/components/TabBar';
@@ -19,6 +17,7 @@ import { ParkingResumeHeader } from '@/components/Header/ParkingResumeHeader';
 import { HeaderTitle } from '@/components/Header/HeaderTitle';
 import { ConfirmationRouteProps } from '@/screens/Confirmation/types';
 import { Confirmation } from '@/screens/Confirmation';
+import Providers from '@/context/Providers';
 
 export type NaviteStackParamList = {
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
@@ -113,7 +112,13 @@ const RootStack = createNativeStackNavigator<NaviteStackParamList>({
 const Navigation = createStaticNavigation(RootStack);
 
 function App(): React.JSX.Element {
-  return <ThemeProvider theme={theme}><SafeAreaView style={{ flex: 1 }}><Navigation /></SafeAreaView></ThemeProvider>;
+  return (
+    <Providers>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Navigation />
+      </SafeAreaView>
+    </Providers>
+  );
 }
 
 export default App;

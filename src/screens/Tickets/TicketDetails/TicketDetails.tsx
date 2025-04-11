@@ -11,7 +11,6 @@ import { useFetchTickets } from '@/hooks/useFetchTickets';
 import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
 
 function TicketDetails({ route }: NativeStackScreenProps<RootNavigationParamList, 'TicketDetails'>) {
-
   const { params: { ticket } } = route;
   const { plate, vehicleType, priceTable, checkin, checkout } = ticket;
 
@@ -65,6 +64,7 @@ function TicketDetails({ route }: NativeStackScreenProps<RootNavigationParamList
       <Button fullWidth onPress={handleRegisterCheckout}>
         Registrar saída
       </Button>
+
     </Styled.Wrapper>
   );
 }
