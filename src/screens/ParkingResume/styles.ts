@@ -7,6 +7,10 @@ export const Wrapper = styled(View)`
   height: 100%;
 `;
 
+export const ToastContainer = styled.View`
+  margin: 16px 0;
+`;
+
 export const List = styled(FlatList<ITicket>)`
   margin-top: 16px;
 `;

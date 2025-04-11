@@ -3,7 +3,8 @@ import { ThemeProvider } from 'styled-components/native';
 import AppProvider from "./AppContext";
 import { theme } from '@/theme';
 import { BottomSheet } from "@/components/BottomSheet";
-import { BottomSheetProvider } from "./BottomSheetProvider";
+import { BottomSheetProvider } from "./BottomSheetContext";
+import ParkingResumeProvider from "./ParkingResumeContext/ParkingResumeContext";
 
 interface ProviderProps {
     children: ReactNode;
@@ -14,7 +15,9 @@ const Providers = ({ children }: ProviderProps) => {
         <AppProvider>
             <ThemeProvider theme={theme}>
                 <BottomSheetProvider>
-                    {children}
+                    <ParkingResumeProvider>
+                        {children}
+                    </ParkingResumeProvider>
                 </BottomSheetProvider>
             </ThemeProvider>
         </AppProvider>

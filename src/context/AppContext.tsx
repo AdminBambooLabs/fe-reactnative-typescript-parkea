@@ -4,7 +4,6 @@ import { AppProviderProps, IAppContext } from "./types";
 const AppContext = createContext<IAppContext>({});
 
 const AppProvider = ({ children }: AppProviderProps) => {
-
     const value = useMemo(() => {
         return {}
     }, [])

@@ -1,32 +1,30 @@
-import { useLocalNavigation } from "@/hooks/useFetchTickets/useLocalNavigation";
+import { useLocalNavigation } from "@/hooks/useLocalNavigation";
 import { useFetchTickets } from "@/hooks/useFetchTickets";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootNavigationParamList } from "@/../App";
 import * as Styled from "./styles"
 import { Icon } from "@/components/Icon";
-import { useBottomSheetContext } from "@/context/BottomSheetProvider/BottomSheetProvider";
+import { useBottomSheetContext } from "@/context/BottomSheetContext/BottomSheetContext";
 import TrashIcon from "@/assets/icons/trash-can-dynamic-color.svg";
+import { useParkingResumeContext } from "@/context/ParkingResumeContext/ParkingResumeContext";
 
 const TicketDetailsDeleteButton = () => {
     const { params } = useRoute<RouteProp<{ ticket: RootNavigationParamList['TicketDetails'] }>>()
 
-    const { navigate, reset } = useLocalNavigation()
+    const { reset } = useLocalNavigation()
     const { cancelTicket, isLoading } = useFetchTickets()
     const { handleOpenBottomSheet } = useBottomSheetContext();
+    const { pushToastToQueue } = useParkingResumeContext();
 
     async function handleCancelTicket() {
         const canceledTicket = await cancelTicket(params.ticket.id);
 
         if (canceledTicket) {
-            navigate('Confirmation', {
-                buttonText: 'Finalizar',
-                text: 'Registro excluído com sucesso',
-                callBack: () => reset({
-                    index: 0,
-                    routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
-                }),
-                icon: <TrashIcon />
-            });
+            pushToastToQueue({ title: 'Registro excluido com sucesso', type: 'error' })
+            reset({
+                index: 0,
+                routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+            })
         }
     }
 

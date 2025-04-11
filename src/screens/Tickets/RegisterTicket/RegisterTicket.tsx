@@ -6,7 +6,7 @@ import { useFetchTickets } from '@/hooks/useFetchTickets';
 import * as Styled from './styles';
 import { ToggleButton } from '@/components/ToggleButton';
 import { EPriceTable, EVehicleType, TPriceTables, TVehicleTypes } from '@/types/tickets';
-import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
+import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 
 function RegisterTicket() {
   const [plate, setPlate] = useState('');
