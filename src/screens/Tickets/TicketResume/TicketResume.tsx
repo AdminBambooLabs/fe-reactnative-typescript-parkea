@@ -10,14 +10,18 @@ import { EPaymentType, EPaymentTypeToLabel, TPaymentTypes } from '@/types/ticket
 import { capitalize } from '@/utils';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
 import { useState } from 'react';
-import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
+import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 import { formatCurrencyBRL, formatCurrencyToNumber } from '@/utils/currency';
 import { InputMask } from '@/components/InputMask';
 import { requestBluetoothPermission } from '@/utils/permissions';
 import { Alert } from 'react-native';
 import { createCheckinTicketPrintPayload, CreateCheckinTicketPrintPayloadParams } from '@/utils/print';
+import { BigLoading } from '@/components/BigLoading';
+import { useSmartLoading } from '@/hooks/useSmartLoading';
+import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
 
-const printCheckinTicketBT = async (args: CreateCheckinTicketPrintPayloadParams) => {
+const printCheckinTicketBT = async (args?: CreateCheckinTicketPrintPayloadParams) => {
+  const newArgs = args || { plate: 'teste', checkin: new Date() };
   if (!(await requestBluetoothPermission())) return;
 
   try {
@@ -27,29 +31,60 @@ const printCheckinTicketBT = async (args: CreateCheckinTicketPrintPayloadParams)
     ThermalPrinterModule.defaultConfig = { ...ThermalPrinterModule.defaultConfig, macAddress: printer.macAddress };
 
     await ThermalPrinterModule.printBluetooth({
-      payload: createCheckinTicketPrintPayload(args)
+      payload: createCheckinTicketPrintPayload(newArgs)
     });
   } catch (err) {
-    Alert.alert('Erro', JSON.stringify(err));
+    throw new Error('Cannot Print Ticket')
   }
 };
+
+const bigLoadingTitles = ['Gerando Ticket...', 'Conectando a Impressora...', 'Imprimindo Ticket...'];
+const bigLoadingDescriptions = ['Estamos gerando seu ticket e logo em seguida será impresso'];
+
+const MIN_TIME = 4000;
+const SHIFT_TIME = MIN_TIME / bigLoadingTitles.length;
 
 function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList, 'TicketResume'>) {
   const { params: { ticket } } = route;
   const { checkin, checkout } = ticket;
 
   const [paymentType, setPaymentType] = useState<TPaymentTypes | undefined>()
+  const [showBigLoading, setShowBigLoading] = useState(false);
   const [discount, setDiscount] = useState('')
 
   const { updateTicket, isLoading } = useFetchTickets()
-  const { navigate } = useLocalNavigation()
+  const { reset } = useLocalNavigation()
+  const { runWithMinimumLoading } = useSmartLoading();
+  const { pushToastToQueue } = useParkingResumeContext();
 
   async function handleRegisterPayment() {
-    const updatedTicket = await updateTicket({ status: 'paid', paymentType, discount: formatCurrencyToNumber(discount) }, ticket.id)
-    if (updatedTicket) {
-      navigate('BottomTabs', { screen: 'ParkingResume' });
+    try {
+      setShowBigLoading(true);
+      const updatedTicket = await runWithMinimumLoading(
+        updateTicket({ status: 'paid', paymentType, discount: formatCurrencyToNumber(discount) }, ticket.id),
+        MIN_TIME
+      );
+
+      if (updatedTicket) {
+        await printCheckinTicketBT();
+
+        setShowBigLoading(false);
+        pushToastToQueue({ title: 'Saída registrada com sucesso!', type: 'success' })
+        reset({
+          index: 0,
+          routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+        });
+      }
+    } catch {
+      pushToastToQueue({ title: 'Não foi possível imprimir o ticket', type: 'error' })
+      reset({
+        index: 0,
+        routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+      });
     }
   }
+
+  if (showBigLoading) return <BigLoading titles={bigLoadingTitles} descriptions={bigLoadingDescriptions} shiftTime={SHIFT_TIME} />;
 
   return (
     <Styled.Wrapper>
@@ -111,11 +146,8 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         </Styled.TotalText>
       </Styled.Container>
 
-      <Button fullWidth onPress={() => printCheckinTicketBT({ plate: ticket.plate, checkin: ticket.checkin })}>
-        Imprimir
-      </Button>
-      <Button fullWidth onPress={handleRegisterPayment}>
-        {isLoading ? 'Carregando...' : 'Confirmar'}
+      <Button disabled={!paymentType} isLoading={isLoading} fullWidth onPress={handleRegisterPayment}>
+        Confirmar
       </Button>
     </Styled.Wrapper>
   );

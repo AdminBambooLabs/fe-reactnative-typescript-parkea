@@ -63,7 +63,6 @@ function useFetchTickets() {
     try {
       setIsLoading(true)
       const deletedTicket = await deleteTicket(ticketId);
-      console.log('[deletedTicket', deletedTicket)
 
       if (deletedTicket.status === 200) {
         return deletedTicket.data

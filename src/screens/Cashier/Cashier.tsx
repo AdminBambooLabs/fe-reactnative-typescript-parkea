@@ -3,7 +3,7 @@ import { useFetchTickets } from '@/hooks/useFetchTickets';
 import * as Styled from './styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootNavigationParamList } from '@/../App';
-import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
+import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 import { View } from 'react-native';
 import { Label } from '@/components/Label';
 

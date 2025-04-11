@@ -8,14 +8,13 @@ import { EPriceTableToLabel, EVehicleTypeToLabel } from '@/types/tickets';
 import { capitalize } from '@/utils';
 import dayjs from 'dayjs';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
-import { useLocalNavigation } from '@/hooks/useFetchTickets/useLocalNavigation';
+import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 
 function TicketDetails({ route }: NativeStackScreenProps<RootNavigationParamList, 'TicketDetails'>) {
-
   const { params: { ticket } } = route;
   const { plate, vehicleType, priceTable, checkin, checkout } = ticket;
 
-  const { updateTicket } = useFetchTickets()
+  const { updateTicket, isLoading } = useFetchTickets()
   const { navigate } = useLocalNavigation();
 
   async function handleRegisterCheckout() {
@@ -62,9 +61,10 @@ function TicketDetails({ route }: NativeStackScreenProps<RootNavigationParamList
         </Styled.HoursContainer>
       </Styled.Container>
 
-      <Button fullWidth onPress={handleRegisterCheckout}>
+      <Button isLoading={isLoading} fullWidth onPress={handleRegisterCheckout}>
         Registrar saída
       </Button>
+
     </Styled.Wrapper>
   );
 }
