@@ -1,12 +1,17 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { AppProviderProps, IAppContext } from "./types";
 
-const AppContext = createContext<IAppContext>({});
+const AppContext = createContext<IAppContext>({} as IAppContext);
 
 const AppProvider = ({ children }: AppProviderProps) => {
+    const [showTabBar, setShowTabBar] = useState(true);
+
     const value = useMemo(() => {
-        return {}
-    }, [])
+        return {
+            showTabBar,
+            setShowTabBar
+        }
+    }, [showTabBar, setShowTabBar])
 
     return (
         <AppContext.Provider value={value}>

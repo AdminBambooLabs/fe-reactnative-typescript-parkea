@@ -17,10 +17,15 @@ const TicketDetailsDeleteButton = () => {
     const { pushToastToQueue } = useParkingResumeContext();
 
     async function handleCancelTicket() {
-        const canceledTicket = await cancelTicket(params.ticket.id);
+        try {
+            const canceledTicket = await cancelTicket(params.ticket.id);
 
-        if (canceledTicket) {
-            pushToastToQueue({ title: 'Registro excluido com sucesso', type: 'error' })
+            if (canceledTicket) {
+                pushToastToQueue({ title: 'Registro excluido com sucesso.', type: 'success' })
+            }
+        } catch (err) {
+            pushToastToQueue({ title: 'Não foi possível excluir o registro.', type: 'error' })
+        } finally {
             reset({
                 index: 0,
                 routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],

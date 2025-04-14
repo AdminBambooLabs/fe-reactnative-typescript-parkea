@@ -67,6 +67,8 @@ function useFetchTickets() {
       if (deletedTicket.status === 200) {
         return deletedTicket.data
       }
+
+      return null;
     } catch {
       return null;
     } finally {

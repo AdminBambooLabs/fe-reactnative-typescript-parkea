@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Text } from 'react-native';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
@@ -7,37 +6,59 @@ import * as Styled from './styles';
 import { ToggleButton } from '@/components/ToggleButton';
 import { EPriceTable, EVehicleType, TPriceTables, TVehicleTypes } from '@/types/tickets';
 import { useLocalNavigation } from '@/hooks/useLocalNavigation';
+import { BigLoading } from '@/components/BigLoading';
+import { printDescriptions, printTitles } from '@/constants/messages';
+import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
+import { useAppContext } from '@/context/AppContext';
+import { useSmartLoading } from '@/hooks/useSmartLoading';
+import { usePrint } from '@/hooks/usePrint';
+
+const MIN_TIME = 4000;
+const SHIFT_TIME = MIN_TIME / printTitles.length;
 
 function RegisterTicket() {
   const [plate, setPlate] = useState('');
   const [vehicleType, setVehicleType] = useState<TVehicleTypes | undefined>();
   const [priceTable, setPriceTable] = useState<TPriceTables | undefined>();
+  const [showBigLoading, setShowBigLoading] = useState(false);
 
   const { createTicket, isLoading } = useFetchTickets();
-  const { reset } = useLocalNavigation()
+  const { reset } = useLocalNavigation();
+  const { pushToastToQueue } = useParkingResumeContext();
+  const { setShowTabBar } = useAppContext();
+  const { runWithMinimumLoading } = useSmartLoading();
+  const { printCheckinTicket } = usePrint();
 
-  async function handleCreateTicket() {
-    if (!plate) return
-
+  async function handleRegisterTicket() {
     try {
       if (plate && vehicleType && priceTable) {
-        const cretedTicket = await createTicket({ plate, vehicleType, priceTable })
+        setShowTabBar(false);
+        setShowBigLoading(true);
+        const cretedTicket = await runWithMinimumLoading(createTicket({ plate, vehicleType, priceTable }), MIN_TIME)
 
         if (cretedTicket) {
+          const { data } = cretedTicket;
+          await printCheckinTicket({ plate: data.plate, checkin: data.checkin })
+
           setPlate('')
           setVehicleType(undefined)
           setPriceTable(undefined)
-          reset({
-            index: 0,
-            routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
-          });
+          pushToastToQueue({ title: 'Registro realizado com sucesso', type: 'success' })
         }
       };
     } catch {
-      // TODO: adjust catch behavior
-      return false
+      pushToastToQueue({ title: 'Não foi possível registrar o ticket', type: 'error' })
+    } finally {
+      setShowTabBar(true)
+      setShowBigLoading(false)
+      reset({
+        index: 0,
+        routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+      })
     }
   }
+
+  if (showBigLoading) return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />;
 
   return (
     <Styled.Wrapper>
@@ -64,8 +85,8 @@ function RegisterTicket() {
         </Styled.InputContainer>
       </Styled.Container>
 
-      <Button disabled={!plate || !vehicleType || !priceTable} fullWidth onPress={handleCreateTicket}>
-        {isLoading ? 'Carregando...' : 'Registrar'}
+      <Button isLoading={isLoading} disabled={!plate || !vehicleType || !priceTable} fullWidth onPress={handleRegisterTicket}>
+        Registrar
       </Button>
     </Styled.Wrapper>
   );

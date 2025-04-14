@@ -18,6 +18,7 @@ import { HeaderTitle } from '@/components/Header/HeaderTitle';
 import { ConfirmationRouteProps } from '@/screens/Confirmation/types';
 import { Confirmation } from '@/screens/Confirmation';
 import Providers from '@/context/Providers';
+import { BigLoading } from '@/components/BigLoading';
 
 export type NaviteStackParamList = {
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
@@ -105,7 +106,7 @@ const RootStack = createNativeStackNavigator<NaviteStackParamList>({
       options: {
         headerShown: false,
       },
-    }
+    },
   },
 });
 

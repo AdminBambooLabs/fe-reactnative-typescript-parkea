@@ -15,6 +15,7 @@ export const InfoContainer = styled.View`
   align-items: center;
   justify-content: center;
   gap: 12px;
+  padding: 0 16px;
 `
 
 export const Title = styled.Text`

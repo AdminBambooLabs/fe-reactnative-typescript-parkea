@@ -1,13 +1,11 @@
 import { useLinkBuilder } from '@react-navigation/native';
-import { Text, PlatformPressable } from '@react-navigation/elements';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import * as Styled from "./styles";
-import { View } from 'react-native';
 import { BottomTabParamList } from 'App';
-import { JSX } from 'react';
 import { Icons } from '@/assets/icons/types';
 import { Icon } from '../Icon';
 import { colors } from '@/theme/colors';
+import { useAppContext } from '@/context/AppContext';
 
 const iconByRoute: Record<keyof BottomTabParamList, Icons> = {
   ParkingResume: 'parking',
@@ -17,6 +15,9 @@ const iconByRoute: Record<keyof BottomTabParamList, Icons> = {
 
 const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const { buildHref } = useLinkBuilder();
+  const { showTabBar } = useAppContext();
+
+  if (!showTabBar) return null;
 
   return (
     <Styled.Wrapper>
