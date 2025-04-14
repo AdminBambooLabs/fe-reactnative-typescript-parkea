@@ -34,10 +34,18 @@ function RegisterTicket() {
       if (plate && vehicleType && priceTable) {
         setShowTabBar(false);
         setShowBigLoading(true);
-        const cretedTicket = await runWithMinimumLoading(createTicket({ plate, vehicleType, priceTable }), MIN_TIME)
 
-        if (cretedTicket) {
-          const { data } = cretedTicket;
+        const createdTicket = await runWithMinimumLoading(
+          createTicket({ plate, vehicleType, priceTable }),
+          MIN_TIME
+        )
+
+        console.log('[createdTicket', createdTicket)
+
+        if (!createdTicket) throw new Error('Não foi possível registrar o ticket');
+
+        if (createdTicket) {
+          const { data } = createdTicket;
           await printCheckinTicket({ plate: data.plate, checkin: data.checkin })
 
           setPlate('')
@@ -46,8 +54,9 @@ function RegisterTicket() {
           pushToastToQueue({ title: 'Registro realizado com sucesso', type: 'success' })
         }
       };
-    } catch {
-      pushToastToQueue({ title: 'Não foi possível registrar o ticket', type: 'error' })
+    } catch (err) {
+      const errString = String(err).replace("Error: ", "");
+      pushToastToQueue({ title: errString, type: 'error' })
     } finally {
       setShowTabBar(true)
       setShowBigLoading(false)

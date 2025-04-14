@@ -3,9 +3,16 @@ import { GetTicketsParams } from './types';
 
 import { ITicket } from '@/types/tickets';
 
-export function getTickets({ ticketId }: GetTicketsParams = {}) {
+export function getTickets({ ticketId, plate }: GetTicketsParams = {}) {
+
+
   const response = api.get<ITicket[]>(
     `/tickets${ticketId ? `/${ticketId}` : ''}`,
+    {
+      params: {
+        plate
+      }
+    }
   );
   return response;
 }
@@ -17,6 +24,7 @@ export function postTicket(ticket: Partial<ITicket> = {}) {
 
 export function patchTicket(ticket: Partial<ITicket> = {}, ticketId: string) {
   const response = api.patch<ITicket>(`/tickets/${ticketId}`, ticket);
+  console.log('[patchTicket response', response, ticket, ticketId);
   return response;
 }
 

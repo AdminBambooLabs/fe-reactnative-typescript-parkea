@@ -5,6 +5,7 @@ const ParkingResumeContext = createContext<IParkingResumeContext>({} as IParking
 
 const ParkingResumeProvider = ({ children }: ParkingResumeProviderProps) => {
     const [toastQueue, setToastQueue] = useState<IToastQueue[]>([]);
+    const [search, setSearch] = useState('');
 
     const pushToastToQueue = ({ timeout = 3000, ...rest }: IToastQueue) => {
         const newQueue = toastQueue;
@@ -28,10 +29,13 @@ const ParkingResumeProvider = ({ children }: ParkingResumeProviderProps) => {
         return {
             toastQueue,
             pushToastToQueue,
-            resetQueue,
             popToastFromQueue,
+            resetQueue,
+
+            search,
+            setSearch
         }
-    }, [toastQueue])
+    }, [toastQueue, search])
 
     return (
         <ParkingResumeContext.Provider value={value}>

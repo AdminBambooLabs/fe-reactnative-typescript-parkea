@@ -7,7 +7,7 @@ function usePrint() {
         try {
             await PrintService.printCheckinTicket(params);
         } catch (err) {
-            throw new Error(JSON.stringify(err))
+            throw new Error("Não foi possível imprimir o ticket")
         }
     };
 
@@ -15,7 +15,7 @@ function usePrint() {
         try {
             await PrintService.printCheckoutTicket(params);
         } catch (err) {
-            throw new Error(JSON.stringify(err))
+            throw new Error("Não foi possível imprimir o ticket")
         }
     };
 

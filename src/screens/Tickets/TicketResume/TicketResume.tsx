@@ -41,23 +41,29 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
 
       const discountNumber = formatCurrencyToNumber(discount);
       const updatedTicket = await runWithMinimumLoading(
-        updateTicket({ status: ETicketStatus.paid, paymentType, discount: discountNumber }, ticket.id),
+        updateTicket({
+          status: ETicketStatus.finished,
+          paymentType,
+          ...(discount && discountNumber ? { discount: discountNumber } : {}),
+        }, ticket.id),
         MIN_TIME
       );
+
+      if (!updatedTicket) throw new Error('Não foi possível realizar o registro')
 
       if (updatedTicket) {
         await printCheckoutTicket({
           plate: updatedTicket.plate,
           checkin: updatedTicket.checkin,
           checkout: updatedTicket.checkout,
-          discount: updatedTicket.discount,
           paymentType: updatedTicket.paymentType,
         });
 
         pushToastToQueue({ title: 'Saída registrada com sucesso!', type: 'success' })
       }
-    } catch {
-      pushToastToQueue({ title: 'Não foi possível imprimir o ticket', type: 'error' })
+    } catch (err) {
+      const errString = String(err).replace("Error: ", "");
+      pushToastToQueue({ title: errString, type: 'error' })
     } finally {
       setShowBigLoading(false);
       reset({

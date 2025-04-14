@@ -21,10 +21,10 @@ const TicketDetailsDeleteButton = () => {
             const canceledTicket = await cancelTicket(params.ticket.id);
 
             if (canceledTicket) {
-                pushToastToQueue({ title: 'Registro excluido com sucesso.', type: 'success' })
+                pushToastToQueue({ title: 'Registro excluido com sucesso', type: 'success' })
             }
         } catch (err) {
-            pushToastToQueue({ title: 'Não foi possível excluir o registro.', type: 'error' })
+            pushToastToQueue({ title: 'Não foi possível excluir o registro', type: 'error' })
         } finally {
             reset({
                 index: 0,

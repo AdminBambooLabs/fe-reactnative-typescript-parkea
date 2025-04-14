@@ -8,19 +8,21 @@ import {
   deleteTicket
 } from '@/api/services/tickets';
 import { ITicket } from '@/types/tickets';
+import { FetchTicketParams } from './types';
 
 function useFetchTickets() {
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  async function fetchTickets(ticketId?: string) {
+  async function fetchTickets({ plate, ticketId }: FetchTicketParams = {}) {
     try {
       setIsLoading(true)
       const params: GetTicketsParams = {}
 
       if (ticketId) params.ticketId = ticketId;
+      if (plate) params.plate = plate;
 
-      const { data, status } = await getTickets();
+      const { data, status } = await getTickets(params);
       if (status === 200) setTickets(data)
     } catch {
       setTickets([])
@@ -33,6 +35,7 @@ function useFetchTickets() {
     try {
       setIsLoading(true);
       const createdTicket = await postTicket({ ...ticket, status: 'open' });
+
       if (createdTicket.status === 201) {
         return createdTicket;
       }
@@ -49,9 +52,11 @@ function useFetchTickets() {
       const updatedTicket = await patchTicket(ticket, ticketId);
 
       if (updatedTicket.status === 200) {
-        return updatedTicket.data
+        console.log('usefetch updatedTicket', updatedTicket)
+        return updatedTicket.data;
       }
     } catch (err) {
+      console.log('[err', err)
       return null;
     } finally {
       setIsLoading(false)

@@ -14,14 +14,14 @@ export enum ETicketStatus {
     open = "open",
     canceled = "canceled",
     closed = "closed",
-    paid = "paid",
+    finished = "finished",
 }
 
 export enum ETicketStatusToLabel {
     open = "aberto",
     canceled = "cancelado",
     closed = "fechado",
-    paid = "pago",
+    finished = "finalizado",
 }
 
 

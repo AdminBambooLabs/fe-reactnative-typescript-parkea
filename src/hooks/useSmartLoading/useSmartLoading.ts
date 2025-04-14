@@ -7,6 +7,7 @@ function useSmartLoading() {
         setLoading(true);
 
         const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(true), minTime));
+        console.log('[runWithMinimumLoading promise', promise)
         const result = await Promise.all([promise, timeoutPromise]);
 
         setLoading(false);

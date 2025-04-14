@@ -6,6 +6,8 @@ export interface IParkingResumeContext {
     resetQueue: () => void;
     popToastFromQueue: () => void;
     toastQueue: IToastQueue[];
+    search: string;
+    setSearch: (value: string) => void;
 }
 
 export interface ParkingResumeProviderProps {
