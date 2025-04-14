@@ -40,8 +40,6 @@ function RegisterTicket() {
           MIN_TIME
         )
 
-        console.log('[createdTicket', createdTicket)
-
         if (!createdTicket) throw new Error('Não foi possível registrar o ticket');
 
         if (createdTicket) {

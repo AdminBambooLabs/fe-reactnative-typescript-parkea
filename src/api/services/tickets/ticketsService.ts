@@ -24,7 +24,6 @@ export function postTicket(ticket: Partial<ITicket> = {}) {
 
 export function patchTicket(ticket: Partial<ITicket> = {}, ticketId: string) {
   const response = api.patch<ITicket>(`/tickets/${ticketId}`, ticket);
-  console.log('[patchTicket response', response, ticket, ticketId);
   return response;
 }
 

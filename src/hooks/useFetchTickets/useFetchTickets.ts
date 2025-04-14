@@ -52,11 +52,9 @@ function useFetchTickets() {
       const updatedTicket = await patchTicket(ticket, ticketId);
 
       if (updatedTicket.status === 200) {
-        console.log('usefetch updatedTicket', updatedTicket)
         return updatedTicket.data;
       }
     } catch (err) {
-      console.log('[err', err)
       return null;
     } finally {
       setIsLoading(false)
