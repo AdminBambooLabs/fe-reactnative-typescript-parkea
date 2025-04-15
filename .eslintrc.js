@@ -18,18 +18,18 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'react-hooks/exhaustive-deps': 'off',
     curly: 'multi',
-    // 'space-in-brackets': [
-    //   'error',
-    //   'always',
-    //   {
-    //     singleValue: false,
-    //     objectsInArrays: false,
-    //     arraysInArrays: false,
-    //     arraysInObjects: false,
-    //     objectsInObjects: false,
-    //     propertyName: false,
-    //   },
-    // ],
+    'space-in-brackets': [
+      'error',
+      'always',
+      {
+        singleValue: false,
+        objectsInArrays: false,
+        arraysInArrays: false,
+        arraysInObjects: false,
+        objectsInObjects: false,
+        propertyName: false,
+      },
+    ],
     'import/order': [
       'error',
       {
@@ -42,9 +42,7 @@ module.exports = {
           'unknown',
         ],
         alphabetize: {
-          /* sort in ascending order. Options: ["ignore", "asc", "desc"] */
           order: 'asc',
-          /* ignore case. Options: [true, false] */
           caseInsensitive: true,
         },
       },

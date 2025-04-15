@@ -5,20 +5,18 @@ import { createStaticNavigation, NavigatorScreenParams } from '@react-navigation
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ParkingResume } from '@/screens/ParkingResume';
-import { RegisterTicket } from '@/screens/Tickets/RegisterTicket';
+import { TicketRegister } from '@/screens/Tickets/TicketRegister';
 import { TicketDetails, TicketDetailsDeleteButton } from '@/screens/Tickets/TicketDetails';
 import { TicketResume } from '@/screens/Tickets/TicketResume';
+import { Cashier } from '@/screens/Cashier';
+import { Confirmation, ConfirmationRouteProps } from '@/screens/Confirmation';
 
 import { ITicket } from '@/types/tickets';
 import { colors } from '@/theme/colors';
 import { TabBar } from '@/components/TabBar';
-import { Cashier } from '@/screens/Cashier';
 import { ParkingResumeHeader } from '@/components/Header/ParkingResumeHeader';
 import { HeaderTitle } from '@/components/Header/HeaderTitle';
-import { ConfirmationRouteProps } from '@/screens/Confirmation/types';
-import { Confirmation } from '@/screens/Confirmation';
 import Providers from '@/context/Providers';
-import { BigLoading } from '@/components/BigLoading';
 
 export type NaviteStackParamList = {
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
@@ -29,7 +27,7 @@ export type NaviteStackParamList = {
 
 export type BottomTabParamList = {
   ParkingResume: undefined;
-  RegisterTicket: undefined;
+  TicketRegister: undefined;
   Cashier: undefined;
 };
 
@@ -53,8 +51,8 @@ const BottomTabs = createBottomTabNavigator<BottomTabParamList>({
         header: (props) => <ParkingResumeHeader {...props} />
       },
     },
-    RegisterTicket: {
-      screen: RegisterTicket,
+    TicketRegister: {
+      screen: TicketRegister,
       options: {
         title: 'Registrar',
         headerTitle: () => (

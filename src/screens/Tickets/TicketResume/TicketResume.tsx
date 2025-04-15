@@ -49,7 +49,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         MIN_TIME
       );
 
-      if (!updatedTicket) throw new Error('Não foi possível realizar o registro')
+      if (!updatedTicket) throw new Error('Não foi possível realizar o registro');
 
       if (updatedTicket) {
         await printCheckoutTicket({

@@ -16,7 +16,7 @@ import { usePrint } from '@/hooks/usePrint';
 const MIN_TIME = 4000;
 const SHIFT_TIME = MIN_TIME / printTitles.length;
 
-function RegisterTicket() {
+function TicketRegister() {
   const [plate, setPlate] = useState('');
   const [vehicleType, setVehicleType] = useState<TVehicleTypes | undefined>();
   const [priceTable, setPriceTable] = useState<TPriceTables | undefined>();
@@ -99,4 +99,4 @@ function RegisterTicket() {
   );
 }
 
-export default RegisterTicket;
+export default TicketRegister;

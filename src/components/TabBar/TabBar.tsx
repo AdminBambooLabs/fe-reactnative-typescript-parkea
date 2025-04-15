@@ -9,7 +9,7 @@ import { useAppContext } from '@/context/AppContext';
 
 const iconByRoute: Record<keyof BottomTabParamList, Icons> = {
   ParkingResume: 'parking',
-  RegisterTicket: 'car-01',
+  TicketRegister: 'car-01',
   Cashier: 'currency-dollar-circle'
 }
 

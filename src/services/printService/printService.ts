@@ -1,5 +1,11 @@
 import ThermalPrinterModule from 'react-native-thermal-printer';
-import { createCheckinTicketPrintPayload, CreateCheckinTicketPrintPayloadParams, createCheckoutTicketPrintPayload, CreateCheckoutTicketPrintPayloadParams } from '@/utils/print';
+import {
+    createCheckinTicketPrintPayload,
+    CreateCheckinTicketPrintPayloadParams,
+    createCheckoutTicketPrintPayload,
+    CreateCheckoutTicketPrintPayloadParams
+
+} from '@/utils/print';
 import { requestBluetoothPermission } from '@/utils/permissions';
 
 class PrinterService {
