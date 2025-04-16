@@ -4,4 +4,4 @@ export const fonts = {
     500: 'SpaceGrotesk-Medium',
     600: 'SpaceGrotesk-SemiBold',
     700: 'SpaceGrotesk-Bold',
-}
+};

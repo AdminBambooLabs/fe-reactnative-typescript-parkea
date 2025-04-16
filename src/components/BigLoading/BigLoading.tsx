@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useLocalNavigation } from '@/hooks/useLocalNavigation';
+import { colors } from '@/theme/colors';
 import * as Styled from './styles';
 import { BigLoadingProps } from './types';
-import { colors } from '@/theme/colors';
-import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 
 const BigLoading = ({ shiftTime = 2000, titles = [], descriptions = [] }: BigLoadingProps) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -12,7 +12,7 @@ const BigLoading = ({ shiftTime = 2000, titles = [], descriptions = [] }: BigLoa
     setOptions({ headerShown: false });
 
     return () => setOptions({ headerShown: true });
-  })
+  });
 
   useEffect(() => {
     if (currentStepIndex < titles.length - 1) {

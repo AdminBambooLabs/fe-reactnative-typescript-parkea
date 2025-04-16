@@ -11,7 +11,7 @@ export const Wrapper = styled.View`
   margin-bottom: 24px;
 `;
 
-export const Pressable = styled(PlatformPressable) <Pick<TabBarTextStyles, "focused">>`
+export const Pressable = styled(PlatformPressable) <Pick<TabBarTextStyles, 'focused'>>`
   padding: 12px;
   ${({ focused, theme }) => focused ? `
   border-bottom-color: ${theme.colors.primary};
@@ -22,9 +22,9 @@ export const Pressable = styled(PlatformPressable) <Pick<TabBarTextStyles, "focu
   gap: 4px;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export const Text = styled(RNText) <TabBarTextStyles>`
   color: ${({ focused, theme }) => theme.colors[focused ? 'primary' : 'grayMedium']};
   font-family: ${({ focused, theme }) => theme.fonts[focused ? 700 : 500]};
-`
+`;

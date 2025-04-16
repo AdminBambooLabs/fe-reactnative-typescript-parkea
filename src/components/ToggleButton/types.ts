@@ -1,6 +1,6 @@
 import { PressableProps } from 'react-native';
 
-export interface ToggleButtonProps extends Omit<PressableProps, "onPress"> {
+export interface ToggleButtonProps extends Omit<PressableProps, 'onPress'> {
   children: string;
   fullWidth?: boolean;
   active?: boolean;
@@ -11,4 +11,4 @@ export type ToggleButtonStyleProps = Pick<ToggleButtonProps, 'fullWidth'> & {
   pressed: boolean;
 };
 
-export type ToggleButtonTextStyleProps = Pick<ToggleButtonStyleProps, "pressed">;
+export type ToggleButtonTextStyleProps = Pick<ToggleButtonStyleProps, 'pressed'>;

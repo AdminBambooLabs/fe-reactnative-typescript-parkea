@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { Animated, Dimensions } from 'react-native';
-import CloseButton from "@/assets/icons/x-close.svg";
+import CloseButton from '@/assets/icons/x-close.svg';
 import { colors } from '@/theme/colors';
 import { Button } from '../Button';
-import * as Styled from "./styles";
+import * as Styled from './styles';
 import { BottomSheetProps } from './types';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -37,8 +37,8 @@ const BottomSheet = ({ title, description, buttonProps, visible, onClose }: Bott
             <Styled.Description>{description}</Styled.Description>
           </Styled.TextContainer>
           <Button {...buttonProps} onPress={(e) => {
-            buttonProps?.onPress?.(e)
-            onClose?.()
+            buttonProps?.onPress?.(e);
+            onClose?.();
           }} fullWidth>Sim, quero excluir.</Button>
         </Styled.Content>
       </Styled.Wrapper>

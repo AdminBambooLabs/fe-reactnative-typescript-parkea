@@ -1,1 +1,1 @@
-export type Icons = "alert-circle" | "alert-triangle" | "arrow-narrow-right" | "arrow-narrow-right-black" | "arrow-narrow-right-dark-gray" | "arrow-narrow-right-light-gray" | "arrow-narrow-right-white" | "car-01" | "check" | "check-square-broken" | "currency-dollar-circle" | "parking" | "trash";
+export type Icons = 'alert-circle' | 'alert-triangle' | 'arrow-narrow-right' | 'car-01' | 'check' | 'check-square-broken' | 'currency-dollar-circle' | 'parking' | 'trash';

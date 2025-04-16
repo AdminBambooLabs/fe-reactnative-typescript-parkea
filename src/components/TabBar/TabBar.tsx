@@ -1,22 +1,23 @@
-import { useLinkBuilder } from '@react-navigation/native';
-import { Text, PlatformPressable } from '@react-navigation/elements';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import * as Styled from "./styles";
-import { View } from 'react-native';
-import { BottomTabParamList } from 'App';
-import { JSX } from 'react';
+import { useLinkBuilder } from '@react-navigation/native';
 import { Icons } from '@/assets/icons/types';
-import { Icon } from '../Icon';
+import { useAppContext } from '@/context/AppContext';
 import { colors } from '@/theme/colors';
+import { BottomTabParamList } from 'App';
+import * as Styled from './styles';
+import { Icon } from '../Icon';
 
 const iconByRoute: Record<keyof BottomTabParamList, Icons> = {
   ParkingResume: 'parking',
-  RegisterTicket: 'car-01',
-  Cashier: 'currency-dollar-circle'
-}
+  TicketRegister: 'car-01',
+  Cashier: 'currency-dollar-circle',
+};
 
 const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const { buildHref } = useLinkBuilder();
+  const { showTabBar } = useAppContext();
+
+  if (!showTabBar) {return null;}
 
   return (
     <Styled.Wrapper>
@@ -70,6 +71,6 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
       })}
     </Styled.Wrapper>
   );
-}
+};
 
 export default TabBar;

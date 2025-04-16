@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { BottomSheetProps } from "@/components/BottomSheet/types";
+import { ReactNode } from 'react';
+import { BottomSheetProps } from '@/components/BottomSheet/types';
 
 export type IHandleOpenBottomSheet = Pick<BottomSheetProps, 'buttonProps' | 'title' | 'description'>
 

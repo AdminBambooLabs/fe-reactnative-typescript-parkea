@@ -1,8 +1,8 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
-import { DefaultIconProps } from "../types"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
+import { DefaultIconProps } from '../types';
 
-const ArrowRight = ({ stroke = "#000", ...rest }: DefaultIconProps) => (
+const ArrowRight = ({ stroke = '#000', ...rest }: DefaultIconProps) => (
     <Svg
         width={18}
         height={14}
@@ -20,4 +20,4 @@ const ArrowRight = ({ stroke = "#000", ...rest }: DefaultIconProps) => (
     </Svg>
 );
 
-export default ArrowRight
+export default ArrowRight;

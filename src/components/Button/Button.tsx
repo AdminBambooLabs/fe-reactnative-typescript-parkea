@@ -1,7 +1,7 @@
 import { ActivityIndicator } from 'react-native';
-import { ButtonProps } from './types';
-import * as Styled from './styles';
 import { colors } from '@/theme/colors';
+import * as Styled from './styles';
+import { ButtonProps } from './types';
 
 const Button = ({ children, variant = 'filled', isLoading, ...rest }: ButtonProps) => {
   return (

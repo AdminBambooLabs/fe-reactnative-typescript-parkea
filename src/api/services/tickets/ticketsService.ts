@@ -1,17 +1,24 @@
 import { api } from '@/api/api';
-import { GetTicketsParams, GetTicketsResponse } from './types';
-
 import { ITicket } from '@/types/tickets';
+import { GetTicketsParams } from './types';
 
-export function getTickets({ ticketId }: GetTicketsParams = {}) {
-  const response = api.get<GetTicketsResponse>(
+
+export function getTickets({ ticketId, plate }: GetTicketsParams = {}) {
+
+
+  const response = api.get<ITicket[]>(
     `/tickets${ticketId ? `/${ticketId}` : ''}`,
+    {
+      params: {
+        plate,
+      },
+    },
   );
   return response;
 }
 
 export function postTicket(ticket: Partial<ITicket> = {}) {
-  const response = api.post<GetTicketsResponse>('/tickets', ticket);
+  const response = api.post<ITicket>('/tickets', ticket);
   return response;
 }
 

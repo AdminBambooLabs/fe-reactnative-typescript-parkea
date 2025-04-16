@@ -1,5 +1,5 @@
-import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { ReactNode } from "react";
+import { NativeStackHeaderProps } from '@react-navigation/native-stack';
+import { ReactNode } from 'react';
 
 export interface SimpleHeaderProps extends NativeStackHeaderProps {
     title?: string;

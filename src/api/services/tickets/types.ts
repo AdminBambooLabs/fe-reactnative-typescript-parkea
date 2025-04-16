@@ -1,8 +1,9 @@
-import { ITicket } from "@/types/tickets";
+import { ITicket } from '@/types/tickets';
 
 // GET
-export interface GetTicketsParams {
+export type GetTicketsParams = {
   ticketId?: string;
+  plate?: string;
 }
 
 export type GetTicketsResponse = ITicket[];

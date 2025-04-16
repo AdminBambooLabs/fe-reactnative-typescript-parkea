@@ -1,1 +1,1 @@
-export { default as useSmartLoading } from './useSmartLoading'
+export { default as useSmartLoading } from './useSmartLoading';

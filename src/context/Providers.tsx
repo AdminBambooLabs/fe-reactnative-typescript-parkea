@@ -1,10 +1,9 @@
-import { ReactNode } from "react"
+import { ReactNode } from 'react';
 import { ThemeProvider } from 'styled-components/native';
-import AppProvider from "./AppContext";
 import { theme } from '@/theme';
-import { BottomSheet } from "@/components/BottomSheet";
-import { BottomSheetProvider } from "./BottomSheetContext";
-import ParkingResumeProvider from "./ParkingResumeContext/ParkingResumeContext";
+import AppProvider from './AppContext';
+import { BottomSheetProvider } from './BottomSheetContext';
+import ParkingResumeProvider from './ParkingResumeContext/ParkingResumeContext';
 
 interface ProviderProps {
     children: ReactNode;
@@ -21,7 +20,7 @@ const Providers = ({ children }: ProviderProps) => {
                 </BottomSheetProvider>
             </ThemeProvider>
         </AppProvider>
-    )
-}
+    );
+};
 
 export default Providers;

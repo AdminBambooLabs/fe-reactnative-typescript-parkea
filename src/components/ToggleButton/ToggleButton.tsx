@@ -6,7 +6,7 @@ const ToggleButton = ({ children, active = false, onPress, ...rest }: ToggleButt
   return (
     <Styled.CustomToggleButton
       onPress={() => {
-        onPress?.(!active)
+        onPress?.(!active);
       }}
       pressed={active} {...rest}>
       <Styled.CustomToggleButtonText pressed={active} disabled={rest.disabled!}>{children}</Styled.CustomToggleButtonText>

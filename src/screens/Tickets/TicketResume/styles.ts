@@ -48,4 +48,4 @@ export const TotalText = styled.Text`
   font-size: 32px;
   font-family: ${({ theme }) => theme.fonts[700]};
   padding: 24px 0;
-`
+`;

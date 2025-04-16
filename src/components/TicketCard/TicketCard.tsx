@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
-import * as Styled from './styles';
-import { TicketCardProps } from './types';
+import { colors } from '@/theme/colors';
 import { EPriceTableToLabel } from '@/types/tickets';
 import { capitalize } from '@/utils';
+import * as Styled from './styles';
+import { TicketCardProps } from './types';
 import { Icon } from '../Icon';
-import SvgComponent from '../Icon/ParkingIcon/ParkingIcon';
-import { colors } from '@/theme/colors';
 
 const TicketCard = ({ ticket, onPress }: TicketCardProps) => {
   const { plate, checkin, priceTable } = ticket;

@@ -1,5 +1,4 @@
-import { Animated } from "react-native";
-import { ButtonProps } from "../Button/types";
+import { ButtonProps } from '../Button/types';
 
 export interface BottomSheetProps {
     visible?: boolean;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { colors } from '@/theme/colors';
 import * as Styled from './styles';
 import { InputMaskProps } from './types';
-import { colors } from '@/theme/colors';
 
 const InputMask = ({ icon, ...rest }: InputMaskProps) => {
   const [isFocused, setIsFocused] = useState(false);

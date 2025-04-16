@@ -5,6 +5,6 @@ export interface InputProps extends TextInputProps {
     fullWidth?: boolean;
     icon?: ReactNode;
 }
-export type InputStyleProps = Pick<InputProps, "fullWidth"> & {
+export type InputStyleProps = Pick<InputProps, 'fullWidth'> & {
     isFocused?: boolean;
 }

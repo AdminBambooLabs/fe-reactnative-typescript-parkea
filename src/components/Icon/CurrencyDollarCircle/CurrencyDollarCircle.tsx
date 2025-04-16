@@ -1,8 +1,8 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
-import { DefaultIconProps } from "../types"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
+import { DefaultIconProps } from '../types';
 
-const CurrencyDollarCircle = ({ stroke = "#2C2C2C", ...rest }: DefaultIconProps) => (
+const CurrencyDollarCircle = ({ stroke = '#2C2C2C', ...rest }: DefaultIconProps) => (
     <Svg fill="none" {...rest}>
         <Path
             stroke={stroke}
@@ -14,4 +14,4 @@ const CurrencyDollarCircle = ({ stroke = "#2C2C2C", ...rest }: DefaultIconProps)
     </Svg>
 );
 
-export default CurrencyDollarCircle
+export default CurrencyDollarCircle;
