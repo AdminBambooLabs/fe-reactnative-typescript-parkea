@@ -1,17 +1,17 @@
 import { useState } from 'react';
+import { BigLoading } from '@/components/BigLoading';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-import { useFetchTickets } from '@/hooks/useFetchTickets';
-import * as Styled from './styles';
 import { ToggleButton } from '@/components/ToggleButton';
-import { EPriceTable, EVehicleType, TPriceTables, TVehicleTypes } from '@/types/tickets';
-import { useLocalNavigation } from '@/hooks/useLocalNavigation';
-import { BigLoading } from '@/components/BigLoading';
 import { printDescriptions, printTitles } from '@/constants/messages';
-import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
 import { useAppContext } from '@/context/AppContext';
-import { useSmartLoading } from '@/hooks/useSmartLoading';
+import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
+import { useFetchTickets } from '@/hooks/useFetchTickets';
+import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 import { usePrint } from '@/hooks/usePrint';
+import { useSmartLoading } from '@/hooks/useSmartLoading';
+import { EPriceTable, EVehicleType, TPriceTables, TVehicleTypes } from '@/types/tickets';
+import * as Styled from './styles';
 
 const MIN_TIME = 4000;
 const SHIFT_TIME = MIN_TIME / printTitles.length;
@@ -37,35 +37,35 @@ function TicketRegister() {
 
         const createdTicket = await runWithMinimumLoading(
           createTicket({ plate, vehicleType, priceTable }),
-          MIN_TIME
-        )
+          MIN_TIME,
+        );
 
-        if (!createdTicket) throw new Error('Não foi possível registrar o ticket');
+        if (!createdTicket) {throw new Error('Não foi possível registrar o ticket');}
 
         if (createdTicket) {
           const { data } = createdTicket;
-          await printCheckinTicket({ plate: data.plate, checkin: data.checkin })
+          await printCheckinTicket({ plate: data.plate, checkin: data.checkin });
 
-          setPlate('')
-          setVehicleType(undefined)
-          setPriceTable(undefined)
-          pushToastToQueue({ title: 'Registro realizado com sucesso', type: 'success' })
+          setPlate('');
+          setVehicleType(undefined);
+          setPriceTable(undefined);
+          pushToastToQueue({ title: 'Registro realizado com sucesso', type: 'success' });
         }
-      };
+      }
     } catch (err) {
-      const errString = String(err).replace("Error: ", "");
-      pushToastToQueue({ title: errString, type: 'error' })
+      const errString = String(err).replace('Error: ', '');
+      pushToastToQueue({ title: errString, type: 'error' });
     } finally {
-      setShowTabBar(true)
-      setShowBigLoading(false)
+      setShowTabBar(true);
+      setShowBigLoading(false);
       reset({
         index: 0,
         routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
-      })
+      });
     }
   }
 
-  if (showBigLoading) return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />;
+  if (showBigLoading) {return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />;}
 
   return (
     <Styled.Wrapper>

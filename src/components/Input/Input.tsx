@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { colors } from '@/theme/colors';
 import * as Styled from './styles';
 import { InputProps } from './types';
-import { useState } from 'react';
 
 const Input = ({ icon, ...rest }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);

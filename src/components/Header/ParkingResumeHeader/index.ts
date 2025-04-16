@@ -1,1 +1,1 @@
-export { default as ParkingResumeHeader } from "./ParkingResumeHeader";
+export { default as ParkingResumeHeader } from './ParkingResumeHeader';

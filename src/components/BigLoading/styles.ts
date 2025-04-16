@@ -9,14 +9,14 @@ export const Wrapper = styled.View`
 
 export const CircularLoader = styled.ActivityIndicator`
   margin-bottom: 30px;
-`
+`;
 
 export const InfoContainer = styled.View`
   align-items: center;
   justify-content: center;
   gap: 12px;
   padding: 0 16px;
-`
+`;
 
 export const Title = styled.Text`
   text-align: center;

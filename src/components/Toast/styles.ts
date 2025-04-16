@@ -13,7 +13,7 @@ export const Wrapper = styled(View) <ToastStyleProps>`
 `;
 
 export const Text = styled(RNText) <ToastStyleProps>`
-  color: ${({ theme, type }) => type === "warning" ? theme.colors.black : theme.colors.white};
+  color: ${({ theme, type }) => type === 'warning' ? theme.colors.black : theme.colors.white};
   font-family: ${({ theme }) => theme.fonts[400]};
   font-size: 14px;
 `;

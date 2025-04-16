@@ -1,2 +1,2 @@
-export { default as usePrint } from "./usePrint";
-export * from "./types";
+export { default as usePrint } from './usePrint';
+export * from './types';

@@ -12,7 +12,7 @@ export const InfoContainer = styled.View`
   align-items: center;
   justify-content: center;
   flex: 1;
-`
+`;
 
 export const Text = styled.Text`
   text-align: center;

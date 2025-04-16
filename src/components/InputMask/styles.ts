@@ -1,6 +1,6 @@
+import { MaskedTextInput } from 'react-native-mask-text';
 import styled from 'styled-components/native';
 import { InputMaskStyleProps } from './types';
-import { MaskedTextInput } from "react-native-mask-text";
 
 export const Wrapper = styled.View`
   position: relative;

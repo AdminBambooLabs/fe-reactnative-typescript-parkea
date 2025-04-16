@@ -1,6 +1,6 @@
-import { HeaderBackButton } from "@react-navigation/elements";
-import styled from "styled-components/native";
-import { SimpleHeaderStyleProps } from "./types";
+import { HeaderBackButton } from '@react-navigation/elements';
+import styled from 'styled-components/native';
+import { SimpleHeaderStyleProps } from './types';
 
 export const HEADER_HEIGHT = 56;
 

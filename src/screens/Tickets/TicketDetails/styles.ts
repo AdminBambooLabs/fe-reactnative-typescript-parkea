@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { CustomHeaderWrapperStyleProps } from './types';
 import { Label as CustomLabel } from '@/components/Label';
+import { CustomHeaderWrapperStyleProps } from './types';
 
 export const Wrapper = styled.View`
   padding: 16px;
@@ -54,8 +54,8 @@ export const CustomHeaderWrapper = styled.View<CustomHeaderWrapperStyleProps>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-`
-export const CustomHeaderButton = styled.TouchableOpacity``
+`;
+export const CustomHeaderButton = styled.TouchableOpacity``;
 export const CustomHeaderButtonText = styled.Text`
   font-weight: bold;
-`
+`;

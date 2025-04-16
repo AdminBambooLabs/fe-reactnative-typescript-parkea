@@ -1,8 +1,8 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
-import { DefaultIconProps } from "../types"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
+import { DefaultIconProps } from '../types';
 
-const Trash = ({ stroke = "#000", ...rest }: DefaultIconProps) => (
+const Trash = ({ stroke = '#000', ...rest }: DefaultIconProps) => (
     <Svg fill="none" {...rest}>
         <Path
             stroke={stroke}
@@ -14,4 +14,4 @@ const Trash = ({ stroke = "#000", ...rest }: DefaultIconProps) => (
     </Svg>
 );
 
-export default Trash
+export default Trash;

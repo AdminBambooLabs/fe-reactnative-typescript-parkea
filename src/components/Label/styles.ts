@@ -6,7 +6,7 @@ const fontBySize: Record<LabelSizes, string> = {
   sm: '12px',
   md: '16px;',
   lg: '20px',
-}
+};
 
 export const CustomLabel = styled(Text) <LabelStylesProps>`
   color: ${({ theme }) => theme.colors.black};
@@ -14,4 +14,4 @@ export const CustomLabel = styled(Text) <LabelStylesProps>`
   font-size: ${({ size }) => fontBySize[size!]};
   font-family: ${({ theme }) => theme.fonts[600]};
 
-`
+`;

@@ -1,9 +1,9 @@
-import { HeaderBackButton } from "@react-navigation/elements";
-import { Platform, StatusBar } from "react-native";
-import styled from "styled-components/native";
-import { ParkingResumeHeaderStyleProps } from "./types";
+import { HeaderBackButton } from '@react-navigation/elements';
+import { Platform, StatusBar } from 'react-native';
+import styled from 'styled-components/native';
+import { ParkingResumeHeaderStyleProps } from './types';
 
-const STATUS_BAR_HEIGHT = Platform.OS === "android" ? StatusBar.currentHeight || 24 : 44;
+const STATUS_BAR_HEIGHT = Platform.OS === 'android' ? StatusBar.currentHeight || 24 : 44;
 
 export const Wrapper = styled.View<ParkingResumeHeaderStyleProps>`
     padding: ${({ safePaddingTop = STATUS_BAR_HEIGHT + 24 }) => safePaddingTop}px 16px 16px;

@@ -18,5 +18,5 @@ export const colors = {
     error: '#FF3B30',
     warning: '#FFCC00',
 
-    transparent: 'transparent'
-}
+    transparent: 'transparent',
+};

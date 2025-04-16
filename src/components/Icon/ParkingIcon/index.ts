@@ -1,1 +1,1 @@
-export { default as ParkingIcon } from "./ParkingIcon"
+export { default as ParkingIcon } from './ParkingIcon';

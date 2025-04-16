@@ -1,22 +1,22 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import dayjs from 'dayjs';
+import { useState } from 'react';
+import { RootNavigationParamList } from '@/../App';
+import { BigLoading } from '@/components/BigLoading';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-import { RootNavigationParamList } from '@/../App';
+import { InputMask } from '@/components/InputMask';
 import { ToggleButton } from '@/components/ToggleButton';
-import * as Styled from './styles';
+import { printDescriptions, printTitles } from '@/constants/messages';
+import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
+import { useFetchTickets } from '@/hooks/useFetchTickets';
+import { useLocalNavigation } from '@/hooks/useLocalNavigation';
+import { usePrint } from '@/hooks/usePrint';
+import { useSmartLoading } from '@/hooks/useSmartLoading';
 import { EPaymentType, EPaymentTypeToLabel, ETicketStatus, TPaymentTypes } from '@/types/tickets';
 import { capitalize } from '@/utils';
-import { useFetchTickets } from '@/hooks/useFetchTickets';
-import { useState } from 'react';
-import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 import { formatCurrencyBRL, formatCurrencyToNumber } from '@/utils/currency';
-import { InputMask } from '@/components/InputMask';
-import { BigLoading } from '@/components/BigLoading';
-import { useSmartLoading } from '@/hooks/useSmartLoading';
-import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
-import { printDescriptions, printTitles } from '@/constants/messages';
-import { usePrint } from '@/hooks/usePrint';
+import * as Styled from './styles';
 
 const MIN_TIME = 4000;
 const SHIFT_TIME = MIN_TIME / printTitles.length;
@@ -46,10 +46,10 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
           paymentType,
           ...(discount && discountNumber ? { discount: discountNumber } : {}),
         }, ticket.id),
-        MIN_TIME
+        MIN_TIME,
       );
 
-      if (!updatedTicket) throw new Error('Não foi possível realizar o registro');
+      if (!updatedTicket) {throw new Error('Não foi possível realizar o registro');}
 
       if (updatedTicket) {
         await printCheckoutTicket({
@@ -59,11 +59,11 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
           paymentType: updatedTicket.paymentType,
         });
 
-        pushToastToQueue({ title: 'Saída registrada com sucesso!', type: 'success' })
+        pushToastToQueue({ title: 'Saída registrada com sucesso!', type: 'success' });
       }
     } catch (err) {
-      const errString = String(err).replace("Error: ", "");
-      pushToastToQueue({ title: errString, type: 'error' })
+      const errString = String(err).replace('Error: ', '');
+      pushToastToQueue({ title: errString, type: 'error' });
     } finally {
       setShowBigLoading(false);
       reset({
@@ -73,7 +73,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
     }
   }
 
-  if (showBigLoading) return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />;
+  if (showBigLoading) {return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />;}
 
   return (
     <Styled.Wrapper>
@@ -81,11 +81,11 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         <Styled.HoursContainer>
           <Styled.Hour>
             <Styled.Label size="sm">Hora de entrada: </Styled.Label>
-            <Input placeholder='--:--' value={checkin ? dayjs(checkin).format('HH:mm') : undefined} readOnly />
+            <Input placeholder="--:--" value={checkin ? dayjs(checkin).format('HH:mm') : undefined} readOnly />
           </Styled.Hour>
           <Styled.Hour>
             <Styled.Label size="sm">Hora de saída: </Styled.Label>
-            <Input placeholder='--:--' value={checkout ? dayjs(checkout).format('HH:mm') : undefined} readOnly />
+            <Input placeholder="--:--" value={checkout ? dayjs(checkout).format('HH:mm') : undefined} readOnly />
           </Styled.Hour>
         </Styled.HoursContainer>
 
@@ -113,17 +113,17 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         <Styled.HoursContainer>
           <Styled.Hour>
             <Styled.Label size="sm">Valor: </Styled.Label>
-            <Input placeholder='R$ 0,00' value={formatCurrencyBRL(ticket.total || 0)} readOnly />
+            <Input placeholder="R$ 0,00" value={formatCurrencyBRL(ticket.total || 0)} readOnly />
           </Styled.Hour>
 
           <Styled.Hour>
             <Styled.Label size="sm">Desconto: </Styled.Label>
             <InputMask
-              keyboardType='numeric'
-              placeholder='R$ 0,00'
+              keyboardType="numeric"
+              placeholder="R$ 0,00"
               value={discount}
               onChangeText={(value) => {
-                setDiscount(value)
+                setDiscount(value);
               }}
               mask="R$ 999,99"
             />

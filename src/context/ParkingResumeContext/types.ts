@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { ToastProps } from "@/components/Toast/types";
+import { ReactNode } from 'react';
+import { ToastProps } from '@/components/Toast/types';
 
 export interface IParkingResumeContext {
     pushToastToQueue: (value: IToastQueue) => void;

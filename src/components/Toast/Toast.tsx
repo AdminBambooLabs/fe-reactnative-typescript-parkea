@@ -4,10 +4,10 @@ import { ToastProps, ToastTypes } from './types';
 import { Icon } from '../Icon';
 
 const iconByType: Record<ToastTypes, Icons> = {
-  success: "check-square-broken",
-  warning: "alert-triangle",
-  error: "alert-circle"
-}
+  success: 'check-square-broken',
+  warning: 'alert-triangle',
+  error: 'alert-circle',
+};
 
 const Toast = ({ title = '', type = 'success' }: ToastProps) => {
   return (

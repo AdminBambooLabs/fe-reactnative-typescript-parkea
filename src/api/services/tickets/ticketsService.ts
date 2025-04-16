@@ -1,7 +1,7 @@
 import { api } from '@/api/api';
+import { ITicket } from '@/types/tickets';
 import { GetTicketsParams } from './types';
 
-import { ITicket } from '@/types/tickets';
 
 export function getTickets({ ticketId, plate }: GetTicketsParams = {}) {
 
@@ -10,9 +10,9 @@ export function getTickets({ ticketId, plate }: GetTicketsParams = {}) {
     `/tickets${ticketId ? `/${ticketId}` : ''}`,
     {
       params: {
-        plate
-      }
-    }
+        plate,
+      },
+    },
   );
   return response;
 }

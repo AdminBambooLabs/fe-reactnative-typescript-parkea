@@ -1,6 +1,6 @@
-import { ITicket } from '@/types/tickets';
 import { FlatList, View } from 'react-native';
 import styled from 'styled-components/native';
+import { ITicket } from '@/types/tickets';
 
 export const Wrapper = styled(View)`
   padding: 16px;

@@ -1,52 +1,52 @@
 export enum EVehicleType {
-    car = "car",
-    motorcycle = "motorcycle",
-    transport = "transport",
+    car = 'car',
+    motorcycle = 'motorcycle',
+    transport = 'transport',
 }
 
 export enum EVehicleTypeToLabel {
-    car = "carro",
-    motorcycle = "moto",
-    transport = "transporte",
+    car = 'carro',
+    motorcycle = 'moto',
+    transport = 'transporte',
 }
 
 export enum ETicketStatus {
-    open = "open",
-    canceled = "canceled",
-    closed = "closed",
-    finished = "finished",
+    open = 'open',
+    canceled = 'canceled',
+    closed = 'closed',
+    finished = 'finished',
 }
 
 export enum ETicketStatusToLabel {
-    open = "aberto",
-    canceled = "cancelado",
-    closed = "fechado",
-    finished = "finalizado",
+    open = 'aberto',
+    canceled = 'cancelado',
+    closed = 'fechado',
+    finished = 'finalizado',
 }
 
 
 export enum EPaymentType {
-    pix = "pix",
-    cash = "cash",
-    card = "card",
+    pix = 'pix',
+    cash = 'cash',
+    card = 'card',
 }
 
 export enum EPaymentTypeToLabel {
-    pix = "pix",
-    cash = "dinheiro",
-    card = "cartão",
+    pix = 'pix',
+    cash = 'dinheiro',
+    card = 'cartão',
 }
 
 export enum EPriceTable {
-    hourly = "hourly",
-    diarist = "diarist",
-    monthly = "monthly",
+    hourly = 'hourly',
+    diarist = 'diarist',
+    monthly = 'monthly',
 }
 
 export enum EPriceTableToLabel {
-    hourly = "horista",
-    diarist = "diarista",
-    monthly = "mensalista",
+    hourly = 'horista',
+    diarist = 'diarista',
+    monthly = 'mensalista',
 }
 
 export type TVehicleTypes = keyof typeof EVehicleType

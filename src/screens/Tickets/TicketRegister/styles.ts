@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Label as CustomLabel } from "@/components/Label"
+import { Label as CustomLabel } from '@/components/Label';
 
 export const Wrapper = styled.View`
   padding: 16px;

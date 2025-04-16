@@ -1,22 +1,23 @@
-import React from 'react';
-import { SafeAreaView } from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStaticNavigation, NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import { SafeAreaView } from 'react-native';
 
-import { ParkingResume } from '@/screens/ParkingResume';
-import { TicketRegister } from '@/screens/Tickets/TicketRegister';
-import { TicketDetails, TicketDetailsDeleteButton } from '@/screens/Tickets/TicketDetails';
-import { TicketResume } from '@/screens/Tickets/TicketResume';
+import { HeaderTitle } from '@/components/Header/HeaderTitle';
+import { ParkingResumeHeader } from '@/components/Header/ParkingResumeHeader';
+import { TabBar } from '@/components/TabBar';
+import Providers from '@/context/Providers';
 import { Cashier } from '@/screens/Cashier';
 import { Confirmation, ConfirmationRouteProps } from '@/screens/Confirmation';
+import { ParkingResume } from '@/screens/ParkingResume';
+import { TicketDetails, TicketDetailsDeleteButton } from '@/screens/Tickets/TicketDetails';
+import { TicketRegister } from '@/screens/Tickets/TicketRegister';
+import { TicketResume } from '@/screens/Tickets/TicketResume';
 
-import { ITicket } from '@/types/tickets';
 import { colors } from '@/theme/colors';
-import { TabBar } from '@/components/TabBar';
-import { ParkingResumeHeader } from '@/components/Header/ParkingResumeHeader';
-import { HeaderTitle } from '@/components/Header/HeaderTitle';
-import Providers from '@/context/Providers';
+import { ITicket } from '@/types/tickets';
 
 export type NaviteStackParamList = {
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
@@ -48,7 +49,7 @@ const BottomTabs = createBottomTabNavigator<BottomTabParamList>({
       screen: ParkingResume,
       options: {
         title: 'Pátio',
-        header: (props) => <ParkingResumeHeader {...props} />
+        header: (props) => <ParkingResumeHeader {...props} />,
       },
     },
     TicketRegister: {
@@ -90,14 +91,14 @@ const RootStack = createNativeStackNavigator<NaviteStackParamList>({
       screen: TicketDetails,
       options: {
         title: 'Detalhe do veículo',
-        headerRight: () => <TicketDetailsDeleteButton />
-      }
+        headerRight: () => <TicketDetailsDeleteButton />,
+      },
     },
     TicketResume: {
       screen: TicketResume,
       options: {
         title: 'Resumo de saída',
-      }
+      },
     },
     Confirmation: {
       screen: Confirmation,

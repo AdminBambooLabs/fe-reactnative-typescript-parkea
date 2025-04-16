@@ -1,4 +1,4 @@
-import { ITicket } from "@/types/tickets";
+import { ITicket } from '@/types/tickets';
 
 // GET
 export type GetTicketsParams = {

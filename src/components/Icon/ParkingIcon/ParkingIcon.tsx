@@ -1,8 +1,8 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
-import { DefaultIconProps } from "../types"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
+import { DefaultIconProps } from '../types';
 
-const ParkingIcon = ({ stroke = "#451BED", ...rest }: DefaultIconProps) => (
+const ParkingIcon = ({ stroke = '#451BED', ...rest }: DefaultIconProps) => (
     <Svg fill="none" {...rest}>
         <Path
             stroke={stroke}
@@ -21,4 +21,4 @@ const ParkingIcon = ({ stroke = "#451BED", ...rest }: DefaultIconProps) => (
     </Svg>
 );
 
-export default ParkingIcon
+export default ParkingIcon;

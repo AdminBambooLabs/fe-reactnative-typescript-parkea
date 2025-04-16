@@ -5,7 +5,7 @@ import {
   getTickets,
   postTicket,
   patchTicket,
-  deleteTicket
+  deleteTicket,
 } from '@/api/services/tickets';
 import { ITicket } from '@/types/tickets';
 import { FetchTicketParams } from './types';
@@ -16,16 +16,16 @@ function useFetchTickets() {
 
   async function fetchTickets({ plate, ticketId }: FetchTicketParams = {}) {
     try {
-      setIsLoading(true)
-      const params: GetTicketsParams = {}
+      setIsLoading(true);
+      const params: GetTicketsParams = {};
 
-      if (ticketId) params.ticketId = ticketId;
-      if (plate) params.plate = plate;
+      if (ticketId) {params.ticketId = ticketId;}
+      if (plate) {params.plate = plate;}
 
       const { data, status } = await getTickets(params);
-      if (status === 200) setTickets(data)
+      if (status === 200) {setTickets(data);}
     } catch {
-      setTickets([])
+      setTickets([]);
     } finally {
       setIsLoading(false);
     }
@@ -44,11 +44,11 @@ function useFetchTickets() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   async function updateTicket(ticket: Partial<ITicket>, ticketId: string) {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const updatedTicket = await patchTicket(ticket, ticketId);
 
       if (updatedTicket.status === 200) {
@@ -57,25 +57,25 @@ function useFetchTickets() {
     } catch (err) {
       return null;
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
 
   async function cancelTicket(ticketId: string) {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const deletedTicket = await deleteTicket(ticketId);
 
       if (deletedTicket.status === 200) {
-        return deletedTicket.data
+        return deletedTicket.data;
       }
 
       return null;
     } catch {
       return null;
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
