@@ -9,6 +9,8 @@ const BottomSheetProvider = ({ children }: BottomSheetProviderProps) => {
     const [isVisible, setIsVisible] = useState(false);
     const [bottomSheetProps, setBottomSheetProps] = useState<Pick<BottomSheetProps, 'buttonProps' | 'title' | 'description'>>({});
 
+    console.log('[bottomSheetProps', bottomSheetProps);
+
     const handleOpenBottomSheet = (props: IHandleOpenBottomSheet) => {
         setBottomSheetProps(props);
         setIsVisible(true);

@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { Alert } from 'react-native';
 import { RootNavigationParamList } from '@/../App';
 import { BigLoading } from '@/components/BigLoading';
 import { Button } from '@/components/Button';
@@ -29,7 +30,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
   const [paymentType, setPaymentType] = useState<TPaymentTypes | undefined>();
   const [discount, setDiscount] = useState('');
 
-  const { printCheckoutTicket } = usePrint();
+  const { printCheckoutTicket, btIsReadyToPrint } = usePrint();
   const { updateTicket, isLoading } = useFetchTickets();
   const { reset } = useLocalNavigation();
   const { runWithMinimumLoading } = useSmartLoading();
@@ -37,6 +38,17 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
 
   async function handleConfirmCheckout() {
     try {
+      const isBTReady = await btIsReadyToPrint();
+
+      if (!isBTReady) {
+        Alert.alert(
+          'Bluetooth',
+          'Para realizar a impressão do ticket o bluetooth deve estar ligado e com as permissões liberadas'
+        );
+
+        return;
+      }
+
       setShowBigLoading(true);
 
       const discountNumber = formatCurrencyToNumber(discount);
@@ -49,22 +61,24 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         MIN_TIME,
       );
 
-      if (!updatedTicket) {throw new Error('Não foi possível realizar o registro');}
+      if (!updatedTicket) { throw new Error('Não foi possível realizar o registro'); }
 
-      if (updatedTicket) {
-        await printCheckoutTicket({
-          plate: updatedTicket.plate,
-          checkin: updatedTicket.checkin,
-          checkout: updatedTicket.checkout,
-          paymentType: updatedTicket.paymentType,
-        });
+      await printCheckoutTicket({
+        plate: updatedTicket.plate,
+        checkin: updatedTicket.checkin,
+        checkout: updatedTicket.checkout,
+        paymentType: updatedTicket.paymentType,
+      });
 
-        pushToastToQueue({ title: 'Saída registrada com sucesso!', type: 'success' });
-      }
+      pushToastToQueue({ title: 'Saída registrada com sucesso!', type: 'success' });
+      setShowBigLoading(false);
+      reset({
+        index: 0,
+        routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+      });
     } catch (err) {
       const errString = String(err).replace('Error: ', '');
       pushToastToQueue({ title: errString, type: 'error' });
-    } finally {
       setShowBigLoading(false);
       reset({
         index: 0,
@@ -73,7 +87,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
     }
   }
 
-  if (showBigLoading) {return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />;}
+  if (showBigLoading) { return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />; }
 
   return (
     <Styled.Wrapper>
