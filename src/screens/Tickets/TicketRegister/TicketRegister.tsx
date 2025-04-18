@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { Alert } from 'react-native';
 import { BigLoading } from '@/components/BigLoading';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
@@ -14,20 +15,42 @@ import { EPriceTable, EVehicleType, TPriceTables, TVehicleTypes } from '@/types/
 import * as Styled from './styles';
 
 const MIN_TIME = 4000;
-const SHIFT_TIME = MIN_TIME / printTitles.length;
 
 function TicketRegister() {
   const [plate, setPlate] = useState('');
   const [vehicleType, setVehicleType] = useState<TVehicleTypes | undefined>();
   const [priceTable, setPriceTable] = useState<TPriceTables | undefined>();
   const [showBigLoading, setShowBigLoading] = useState(false);
+  const [printMessages, setPrintMessages] = useState(printTitles);
 
   const { createTicket, isLoading } = useFetchTickets();
   const { reset } = useLocalNavigation();
   const { pushToastToQueue } = useParkingResumeContext();
   const { setShowTabBar } = useAppContext();
   const { runWithMinimumLoading } = useSmartLoading();
-  const { printCheckinTicket } = usePrint();
+  const { printCheckinTicket, btIsReadyToPrint } = usePrint();
+
+  const SHIFT_TIME = useMemo(() => MIN_TIME / printMessages.length, [printMessages]);
+
+  async function checkBTState() {
+    const isBTReady = await btIsReadyToPrint();
+
+    if (!isBTReady) {
+      Alert.alert(
+        'Bluetooth',
+        'Para realizar a impressão do ticket o bluetooth deve estar ligado e com as permissões liberadas. Deseja realizar o registro do ticket sem a impressão?',
+        [
+          {
+            text: 'Sim', onPress: () => {
+              setPrintMessages([printTitles[0]]);
+              handleRegisterTicket();
+            },
+          },
+          { text: 'Não' },
+        ]
+      );
+    }
+  }
 
   async function handleRegisterTicket() {
     try {
@@ -40,7 +63,7 @@ function TicketRegister() {
           MIN_TIME,
         );
 
-        if (!createdTicket) {throw new Error('Não foi possível registrar o ticket');}
+        if (!createdTicket) { throw new Error('Não foi possível registrar o ticket'); }
 
         if (createdTicket) {
           const { data } = createdTicket;
@@ -49,13 +72,19 @@ function TicketRegister() {
           setPlate('');
           setVehicleType(undefined);
           setPriceTable(undefined);
+
           pushToastToQueue({ title: 'Registro realizado com sucesso', type: 'success' });
+          setShowTabBar(true);
+          setShowBigLoading(false);
+          reset({
+            index: 0,
+            routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+          });
         }
       }
     } catch (err) {
       const errString = String(err).replace('Error: ', '');
       pushToastToQueue({ title: errString, type: 'error' });
-    } finally {
       setShowTabBar(true);
       setShowBigLoading(false);
       reset({
@@ -65,7 +94,7 @@ function TicketRegister() {
     }
   }
 
-  if (showBigLoading) {return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />;}
+  if (showBigLoading) { return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />; }
 
   return (
     <Styled.Wrapper>
@@ -92,7 +121,7 @@ function TicketRegister() {
         </Styled.InputContainer>
       </Styled.Container>
 
-      <Button isLoading={isLoading} disabled={!plate || !vehicleType || !priceTable} fullWidth onPress={handleRegisterTicket}>
+      <Button isLoading={isLoading} disabled={!plate || !vehicleType || !priceTable} fullWidth onPress={checkBTState}>
         Registrar
       </Button>
     </Styled.Wrapper>
