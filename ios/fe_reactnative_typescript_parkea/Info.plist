@@ -56,5 +56,9 @@
 		<string>SpaceGrotesk-SemiBold.ttf</string>
 		<string>SpaceGrotesk-VariableFont_wght.ttf</string>
 	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
 </dict>
 </plist>
