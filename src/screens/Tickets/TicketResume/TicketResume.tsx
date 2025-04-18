@@ -29,6 +29,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
   const [showBigLoading, setShowBigLoading] = useState(false);
   const [paymentType, setPaymentType] = useState<TPaymentTypes | undefined>();
   const [discount, setDiscount] = useState('');
+  const [printMessages, setPrintMessages] = useState(printTitles);
 
   const { printCheckoutTicket, btIsReadyToPrint } = usePrint();
   const { updateTicket, isLoading } = useFetchTickets();
@@ -36,19 +37,28 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
   const { runWithMinimumLoading } = useSmartLoading();
   const { pushToastToQueue } = useParkingResumeContext();
 
+  async function checkBTState() {
+    const isBTReady = await btIsReadyToPrint();
+
+    if (!isBTReady) {
+      Alert.alert(
+        'Bluetooth',
+        'Para realizar a impressão do ticket o bluetooth deve estar ligado e com as permissões liberadas. Deseja realizar o registro do ticket sem a impressão?',
+        [
+          {
+            text: 'Sim', onPress: () => {
+              setPrintMessages([printTitles[0]]);
+              handleConfirmCheckout();
+            },
+          },
+          { text: 'Não' },
+        ]
+      );
+    }
+  }
+
   async function handleConfirmCheckout() {
     try {
-      const isBTReady = await btIsReadyToPrint();
-
-      if (!isBTReady) {
-        Alert.alert(
-          'Bluetooth',
-          'Para realizar a impressão do ticket o bluetooth deve estar ligado e com as permissões liberadas'
-        );
-
-        return;
-      }
-
       setShowBigLoading(true);
 
       const discountNumber = formatCurrencyToNumber(discount);
@@ -87,7 +97,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
     }
   }
 
-  if (showBigLoading) { return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />; }
+  if (showBigLoading) { return <BigLoading titles={printMessages} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />; }
 
   return (
     <Styled.Wrapper>
@@ -149,7 +159,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         </Styled.TotalText>
       </Styled.Container>
 
-      <Button disabled={!paymentType} isLoading={isLoading} fullWidth onPress={handleConfirmCheckout}>
+      <Button disabled={!paymentType} isLoading={isLoading} fullWidth onPress={checkBTState}>
         Confirmar
       </Button>
     </Styled.Wrapper>
