@@ -4,7 +4,7 @@ import { BigLoading } from '@/components/BigLoading';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { ToggleButton } from '@/components/ToggleButton';
-import { printDescriptions, printTitles } from '@/constants/messages';
+import { loadAndPrintDescriptions, loadAndPrintTitles, loadWithoutPrintDescriptions, loadWithoutPrintTitle } from '@/constants/messages';
 import { useAppContext } from '@/context/AppContext';
 import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
@@ -21,7 +21,10 @@ function TicketRegister() {
   const [vehicleType, setVehicleType] = useState<TVehicleTypes | undefined>();
   const [priceTable, setPriceTable] = useState<TPriceTables | undefined>();
   const [showBigLoading, setShowBigLoading] = useState(false);
-  const [printMessages, setPrintMessages] = useState(printTitles);
+  const [printMessages, setPrintMessages] = useState({
+    titles: loadAndPrintTitles,
+    descriptions: loadAndPrintDescriptions,
+  });
 
   const { createTicket, isLoading } = useFetchTickets();
   const { reset } = useLocalNavigation();
@@ -30,9 +33,9 @@ function TicketRegister() {
   const { runWithMinimumLoading } = useSmartLoading();
   const { printCheckinTicket, btIsReadyToPrint } = usePrint();
 
-  const SHIFT_TIME = useMemo(() => MIN_TIME / printMessages.length, [printMessages]);
+  const SHIFT_TIME = useMemo(() => MIN_TIME / printMessages.titles.length, [printMessages]);
 
-  async function checkBTState() {
+  async function handleConfirmButton() {
     const isBTReady = await btIsReadyToPrint();
 
     if (!isBTReady) {
@@ -42,17 +45,26 @@ function TicketRegister() {
         [
           {
             text: 'Sim', onPress: () => {
-              setPrintMessages([printTitles[0]]);
+              setPrintMessages({
+                titles: loadWithoutPrintTitle,
+                descriptions: loadWithoutPrintDescriptions,
+              });
               handleRegisterTicket();
             },
           },
           { text: 'Não' },
         ]
       );
+    } else {
+      setPrintMessages({
+        titles: loadAndPrintTitles,
+        descriptions: loadAndPrintDescriptions,
+      });
+      handleRegisterTicket(true);
     }
   }
 
-  async function handleRegisterTicket() {
+  async function handleRegisterTicket(print?: boolean) {
     try {
       if (plate && vehicleType && priceTable) {
         setShowTabBar(false);
@@ -67,7 +79,9 @@ function TicketRegister() {
 
         if (createdTicket) {
           const { data } = createdTicket;
-          await printCheckinTicket({ plate: data.plate, checkin: data.checkin });
+          if (print) {
+            await printCheckinTicket({ plate: data.plate, checkin: data.checkin });
+          }
 
           setPlate('');
           setVehicleType(undefined);
@@ -94,7 +108,7 @@ function TicketRegister() {
     }
   }
 
-  if (showBigLoading) { return <BigLoading titles={printTitles} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />; }
+  if (showBigLoading) { return <BigLoading titles={printMessages.titles} descriptions={printMessages.descriptions} shiftTime={SHIFT_TIME} />; }
 
   return (
     <Styled.Wrapper>
@@ -121,7 +135,7 @@ function TicketRegister() {
         </Styled.InputContainer>
       </Styled.Container>
 
-      <Button isLoading={isLoading} disabled={!plate || !vehicleType || !priceTable} fullWidth onPress={checkBTState}>
+      <Button isLoading={isLoading} disabled={!plate || !vehicleType || !priceTable} fullWidth onPress={handleConfirmButton}>
         Registrar
       </Button>
     </Styled.Wrapper>

@@ -10,6 +10,7 @@ import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingR
 import { useDebounce } from '@/hooks/useDebounce';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
 import { useLocalNavigation } from '@/hooks/useLocalNavigation';
+import { requestBluetoothPermissions } from '@/utils/bluetooth';
 import * as Styled from './styles';
 
 function ParkingResume({ }: NativeStackScreenProps<RootNavigationParamList, 'ParkingResume'>) {
@@ -50,6 +51,10 @@ function ParkingResume({ }: NativeStackScreenProps<RootNavigationParamList, 'Par
   useEffect(() => {
     debouncedSearch();
   }, [search]);
+
+  useEffect(() => {
+    requestBluetoothPermissions();
+  }, []);
 
   return (
     <Styled.Wrapper>

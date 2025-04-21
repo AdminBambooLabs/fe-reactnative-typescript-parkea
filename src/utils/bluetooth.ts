@@ -1,4 +1,4 @@
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import { BleManager, State } from 'react-native-ble-plx';
 
 const unableToPrintStatus: (keyof typeof State)[] = [
@@ -8,10 +8,31 @@ const unableToPrintStatus: (keyof typeof State)[] = [
   State.Unauthorized,
 ];
 
-export async function requestBluetoothPermission() {
-  const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT);
+export async function requestBluetoothPermissions() {
+  if (Platform.OS === 'android') {
+    const apiLevel = Platform.Version;
 
-  return granted === PermissionsAndroid.RESULTS.GRANTED;
+    if (apiLevel >= 31) {
+      // Android 12+
+      const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+      ]);
+
+      return (
+        granted[PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT] === PermissionsAndroid.RESULTS.GRANTED &&
+        granted[PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN] === PermissionsAndroid.RESULTS.GRANTED
+      );
+    } else {
+      // Android 6–11
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    }
+  }
+
+  // No iOS ou outras plataformas
+  return true;
 }
 
 export function createBluetoothStateListener(listener: (state: State) => void) {
