@@ -8,7 +8,7 @@ import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { InputMask } from '@/components/InputMask';
 import { ToggleButton } from '@/components/ToggleButton';
-import { printDescriptions, printTitles } from '@/constants/messages';
+import { loadAndPrintDescriptions, loadAndPrintTitles, loadWithoutPrintDescriptions, loadWithoutPrintTitle } from '@/constants/messages';
 import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
 import { useFetchTickets } from '@/hooks/useFetchTickets';
 import { useLocalNavigation } from '@/hooks/useLocalNavigation';
@@ -20,7 +20,7 @@ import { formatCurrencyBRL, formatCurrencyToNumber } from '@/utils/currency';
 import * as Styled from './styles';
 
 const MIN_TIME = 4000;
-const SHIFT_TIME = MIN_TIME / printTitles.length;
+const SHIFT_TIME = MIN_TIME / loadAndPrintTitles.length;
 
 function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList, 'TicketResume'>) {
   const { params: { ticket } } = route;
@@ -29,7 +29,10 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
   const [showBigLoading, setShowBigLoading] = useState(false);
   const [paymentType, setPaymentType] = useState<TPaymentTypes | undefined>();
   const [discount, setDiscount] = useState('');
-  const [printMessages, setPrintMessages] = useState(printTitles);
+  const [printMessages, setPrintMessages] = useState({
+    titles: loadAndPrintTitles,
+    descriptions: loadAndPrintDescriptions,
+  });
 
   const { printCheckoutTicket, btIsReadyToPrint } = usePrint();
   const { updateTicket, isLoading } = useFetchTickets();
@@ -37,7 +40,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
   const { runWithMinimumLoading } = useSmartLoading();
   const { pushToastToQueue } = useParkingResumeContext();
 
-  async function checkBTState() {
+  async function handleConfirmButton() {
     const isBTReady = await btIsReadyToPrint();
 
     if (!isBTReady) {
@@ -47,17 +50,26 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         [
           {
             text: 'Sim', onPress: () => {
-              setPrintMessages([printTitles[0]]);
+              setPrintMessages({
+                titles: loadWithoutPrintTitle,
+                descriptions: loadWithoutPrintDescriptions,
+              });
               handleConfirmCheckout();
             },
           },
           { text: 'Não' },
         ]
       );
+    } else {
+      setPrintMessages({
+        titles: loadAndPrintTitles,
+        descriptions: loadAndPrintDescriptions,
+      });
+      handleConfirmCheckout(true);
     }
   }
 
-  async function handleConfirmCheckout() {
+  async function handleConfirmCheckout(print?: boolean) {
     try {
       setShowBigLoading(true);
 
@@ -73,12 +85,14 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
 
       if (!updatedTicket) { throw new Error('Não foi possível realizar o registro'); }
 
-      await printCheckoutTicket({
-        plate: updatedTicket.plate,
-        checkin: updatedTicket.checkin,
-        checkout: updatedTicket.checkout,
-        paymentType: updatedTicket.paymentType,
-      });
+      if (print) {
+        await printCheckoutTicket({
+          plate: updatedTicket.plate,
+          checkin: updatedTicket.checkin,
+          checkout: updatedTicket.checkout,
+          paymentType: updatedTicket.paymentType,
+        });
+      }
 
       pushToastToQueue({ title: 'Saída registrada com sucesso!', type: 'success' });
       setShowBigLoading(false);
@@ -97,7 +111,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
     }
   }
 
-  if (showBigLoading) { return <BigLoading titles={printMessages} descriptions={printDescriptions} shiftTime={SHIFT_TIME} />; }
+  if (showBigLoading) { return <BigLoading titles={printMessages.titles} descriptions={printMessages.descriptions} shiftTime={SHIFT_TIME} />; }
 
   return (
     <Styled.Wrapper>
@@ -159,7 +173,7 @@ function TicketResume({ route }: NativeStackScreenProps<RootNavigationParamList,
         </Styled.TotalText>
       </Styled.Container>
 
-      <Button disabled={!paymentType} isLoading={isLoading} fullWidth onPress={checkBTState}>
+      <Button disabled={!paymentType} isLoading={isLoading} fullWidth onPress={handleConfirmButton}>
         Confirmar
       </Button>
     </Styled.Wrapper>

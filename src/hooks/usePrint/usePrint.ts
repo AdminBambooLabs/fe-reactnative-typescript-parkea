@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { State } from 'react-native-ble-plx';
 import { PrintService } from '@/services/printService';
-import { createBluetoothStateListener, isBluetoothReadyToPrint, requestBluetoothPermission } from '@/utils/bluetooth';
+import { EPaymentTypeToLabel, TPaymentTypes } from '@/types/tickets';
+import { createBluetoothStateListener, isBluetoothReadyToPrint, requestBluetoothPermissions } from '@/utils/bluetooth';
 import { CreateCheckinTicketPrintPayloadParams, CreateCheckoutTicketPrintPayloadParams } from '@/utils/print';
 
 function usePrint() {
@@ -16,7 +17,7 @@ function usePrint() {
   }, []);
 
   const btIsReadyToPrint = async () => {
-    const btPermission = await requestBluetoothPermission();
+    const btPermission = await requestBluetoothPermissions();
     const readyToPrint = isBluetoothReadyToPrint(btStatus);
 
     return btPermission && readyToPrint;
@@ -31,6 +32,12 @@ function usePrint() {
   }
 
   async function printCheckoutTicket(params: CreateCheckoutTicketPrintPayloadParams) {
+    const newParams = params;
+
+    if (params.paymentType) {
+      newParams.paymentType = EPaymentTypeToLabel[params.paymentType] as TPaymentTypes;
+    }
+
     try {
       await PrintService.printCheckoutTicket(params);
     } catch (err) {
