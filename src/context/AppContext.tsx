@@ -5,13 +5,16 @@ const AppContext = createContext<IAppContext>({} as IAppContext);
 
 const AppProvider = ({ children }: AppProviderProps) => {
     const [showTabBar, setShowTabBar] = useState(true);
+    const [profile, setProfile] = useState<IAppContext['profile']>(null);
 
     const value = useMemo(() => {
         return {
             showTabBar,
             setShowTabBar,
+            profile,
+            setProfile,
         };
-    }, [showTabBar, setShowTabBar]);
+    }, [showTabBar, setShowTabBar, profile]);
 
     return (
         <AppContext.Provider value={value}>

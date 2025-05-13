@@ -2,18 +2,12 @@ import { api } from '@/api/api';
 import { ITicket } from '@/types/tickets';
 import { GetTicketsParams } from './types';
 
-
 export function getTickets({ ticketId, plate }: GetTicketsParams = {}) {
-
-
-  const response = api.get<ITicket[]>(
-    `/tickets${ticketId ? `/${ticketId}` : ''}`,
-    {
-      params: {
-        plate,
-      },
+  const response = api.get<ITicket[]>(`/tickets${ticketId ? `/${ticketId}` : ''}`, {
+    params: {
+      plate,
     },
-  );
+  });
   return response;
 }
 

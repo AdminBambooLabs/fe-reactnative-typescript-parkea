@@ -36,10 +36,16 @@ const BottomSheet = ({ title, description, buttonProps, visible, onClose }: Bott
             <Styled.Title>{title}</Styled.Title>
             <Styled.Description>{description}</Styled.Description>
           </Styled.TextContainer>
-          <Button {...buttonProps} onPress={(e) => {
-            buttonProps?.onPress?.(e);
-            onClose?.();
-          }} fullWidth>Sim, quero excluir.</Button>
+          <Button
+            {...buttonProps}
+            onPress={(e) => {
+              buttonProps?.onPress?.(e);
+              onClose?.();
+            }}
+            fullWidth
+          >
+            {buttonProps?.children}
+          </Button>
         </Styled.Content>
       </Styled.Wrapper>
     </>

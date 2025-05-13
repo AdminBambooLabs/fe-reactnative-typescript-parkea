@@ -9,8 +9,10 @@ import { HeaderTitle } from '@/components/Header/HeaderTitle';
 import { ParkingResumeHeader } from '@/components/Header/ParkingResumeHeader';
 import { TabBar } from '@/components/TabBar';
 import Providers from '@/context/Providers';
+import { SignUpStack } from '@/navigation/SignUpNavigator';
 import { Cashier } from '@/screens/Cashier';
 import { Confirmation, ConfirmationRouteProps } from '@/screens/Confirmation';
+import { Login } from '@/screens/Login';
 import { ParkingResume } from '@/screens/ParkingResume';
 import { TicketDetails, TicketDetailsDeleteButton } from '@/screens/Tickets/TicketDetails';
 import { TicketRegister } from '@/screens/Tickets/TicketRegister';
@@ -24,6 +26,8 @@ export type NaviteStackParamList = {
   TicketDetails: { ticket: ITicket };
   TicketResume: { ticket: ITicket };
   Confirmation: ConfirmationRouteProps;
+  Login: undefined;
+  SignUp: undefined;
 };
 
 export type BottomTabParamList = {
@@ -71,6 +75,7 @@ const BottomTabs = createBottomTabNavigator<BottomTabParamList>({
 });
 
 const RootStack = createNativeStackNavigator<NaviteStackParamList>({
+  initialRouteName: 'SignUp',
   screenOptions: {
     contentStyle: {
       backgroundColor: colors.white,
@@ -81,6 +86,18 @@ const RootStack = createNativeStackNavigator<NaviteStackParamList>({
     ),
   },
   screens: {
+    SignUp: {
+      screen: SignUpStack,
+      options: {
+        headerShown: false,
+      },
+    },
+    Login: {
+      screen: Login,
+      options: {
+        headerShown: false,
+      },
+    },
     BottomTabs: {
       screen: BottomTabs,
       options: {

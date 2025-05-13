@@ -1,11 +1,12 @@
+import { ReactNode } from 'react';
 import { TouchableOpacityProps } from 'react-native';
 import { Colors } from '@/theme';
 
-export type ButtonVariants = 'filled' | 'ghost'
-export type ButtonColors = Pick<Colors, 'primary' | 'error'>
+export type ButtonVariants = 'filled' | 'ghost';
+export type ButtonColors = Pick<Colors, 'primary' | 'error'>;
 
 export interface ButtonProps extends TouchableOpacityProps {
-  children: string;
+  children: string | ReactNode;
   fullWidth?: boolean;
   variant?: ButtonVariants;
   color?: keyof ButtonColors;
@@ -14,4 +15,4 @@ export interface ButtonProps extends TouchableOpacityProps {
 
 export type ButtonStyleProps = Pick<ButtonProps, 'fullWidth' | 'variant' | 'color'>;
 
-export type GetButtonColorSetParams = Pick<ButtonProps, 'color' | 'disabled' | 'variant'>
+export type GetButtonColorSetParams = Pick<ButtonProps, 'color' | 'disabled' | 'variant'>;

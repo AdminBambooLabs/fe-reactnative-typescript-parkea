@@ -1,4 +1,10 @@
 import styled from 'styled-components/native';
+import { CardStylesProps } from './types';
+
+const gapSizes: Record<CardStylesProps['gap'], number> = {
+  md: 6,
+  sm: 0,
+};
 
 export const Wrapper = styled.TouchableOpacity`
   display: flex;
@@ -11,8 +17,8 @@ export const Wrapper = styled.TouchableOpacity`
   background-color: ${({ theme }) => theme.colors.primaryAlpha};
 `;
 
-export const InfoContainer = styled.View`
-  gap: 6px;
+export const InfoContainer = styled.View<CardStylesProps>`
+  gap: ${({ gap }) => gapSizes[gap]}px;
 `;
 
 export const Title = styled.Text`

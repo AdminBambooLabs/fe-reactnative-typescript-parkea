@@ -15,14 +15,18 @@ const buttonColors: ButtonColors = {
 };
 
 const getButtonColorSet = ({ variant, color = 'primary', disabled }: GetButtonColorSetParams) => {
-  if (disabled) { return colors.disabled; }
+  if (disabled) {
+    return colors.disabled;
+  }
 
-  if (variant === 'ghost') { return buttonVariantColors.ghost; }
+  if (variant === 'ghost') {
+    return buttonVariantColors.ghost;
+  }
 
   return buttonColors[color];
 };
 
-export const CustomButton = styled(TouchableOpacity) <ButtonStyleProps>`
+export const CustomButton = styled(TouchableOpacity)<ButtonStyleProps>`
   ${({ fullWidth }) => (fullWidth ? 'width: 100%;' : '')}
   display: flex;
   align-items: center;
@@ -37,7 +41,8 @@ const buttonTextVariantColors: Record<ButtonVariants, keyof Colors> = {
   ghost: 'primary',
 };
 
-export const CustomButtonText = styled(Text) <Pick<ButtonStyleProps, 'variant'>>`
-  color: ${({ theme, disabled, variant }) => disabled ? theme.colors.grayTextAlpha : theme.colors[buttonTextVariantColors[variant!]]};
+export const CustomButtonText = styled(Text)<Pick<ButtonStyleProps, 'variant'>>`
+  color: ${({ theme, disabled, variant }) =>
+    disabled ? theme.colors.grayTextAlpha : theme.colors[buttonTextVariantColors[variant!]]};
   font-family: ${({ theme }) => theme.fonts[500]};
 `;

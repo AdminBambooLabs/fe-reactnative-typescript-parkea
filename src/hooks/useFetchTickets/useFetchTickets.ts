@@ -19,11 +19,17 @@ function useFetchTickets() {
       setIsLoading(true);
       const params: GetTicketsParams = {};
 
-      if (ticketId) {params.ticketId = ticketId;}
-      if (plate) {params.plate = plate;}
+      if (ticketId) {
+        params.ticketId = ticketId;
+      }
+      if (plate) {
+        params.plate = plate;
+      }
 
       const { data, status } = await getTickets(params);
-      if (status === 200) {setTickets(data);}
+      if (status === 200) {
+        setTickets(data);
+      }
     } catch {
       setTickets([]);
     } finally {
@@ -60,7 +66,6 @@ function useFetchTickets() {
       setIsLoading(false);
     }
   }
-
 
   async function cancelTicket(ticketId: string) {
     try {

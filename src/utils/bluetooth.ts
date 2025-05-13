@@ -43,6 +43,5 @@ export function createBluetoothStateListener(listener: (state: State) => void) {
 
 export function isBluetoothReadyToPrint(state: keyof typeof State) {
   const status = unableToPrintStatus.includes(state);
-  console.log('[status', status);
   return !status;
 }
