@@ -17,8 +17,15 @@ export function postProfile(profile: Partial<IProfile> = {}) {
   return response;
 }
 
-export function patchProfile({ profileData: profile, profileId }: PatchProfileParams) {
-  const response = api.patch<IProfile>(`/${PROFILE}/${profileId}`, profile);
+export function patchProfile({ profileData, profileId }: PatchProfileParams) {
+  const payload = {
+    ...profileData,
+    ...(profileData?.streetNumber && { streetNumber: Number(profileData.streetNumber) }),
+  };
+
+  const response = api.patch<IProfile>(`/${PROFILE}/${profileId}`, payload);
+  console.log('[response]', response);
+  console.log('[payload]', payload, profileId);
   return response;
 }
 

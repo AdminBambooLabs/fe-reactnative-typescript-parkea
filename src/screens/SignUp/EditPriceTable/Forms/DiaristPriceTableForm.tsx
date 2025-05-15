@@ -4,6 +4,7 @@ import { DiaristSchema } from '@/schemas/signup/editPriceTables';
 
 export const DiaristPriceTableForm = () => {
     const { formState, control } = useFormContext<DiaristSchema>();
+    console.log('[formState]', formState);
 
     return (
         <>

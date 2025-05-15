@@ -13,6 +13,7 @@ import { diaristSchema, hourlySchema, monthlySchema } from '@/schemas/signup/edi
 import { IProfile } from '@/types/profile';
 import { EPriceTableToLabel, TPriceTables } from '@/types/tickets';
 import { capitalize } from '@/utils';
+import { formatCurrencyBRL } from '@/utils/currency';
 import { DiaristPriceTableForm } from './Forms/DiaristPriceTableForm';
 import { HourlyPriceTableForm } from './Forms/HourlyPriceTableForm';
 import { MonthlyPriceTableForm } from './Forms/MonthlyPriceTableForm';
@@ -30,8 +31,22 @@ const schemaByPriceTableType: Record<TPriceTables, z.ZodObject<any>> = {
     monthly: monthlySchema,
 };
 
+const prepareValuesToInput = (prices: any) => {
+    if (!prices) {
+        return;
+    }
+
+    Object.keys(prices).map(key => {
+        if (key.startsWith('price')) {
+            prices[key] = formatCurrencyBRL(prices[key]);
+        }
+    });
+
+    return prices;
+};
+
 const EditPriceTable = ({ route }: NativeStackScreenProps<SignUpStackParamList, 'EditPriceTables'>) => {
-    const { profile } = useAppContext();
+    const { profile, setProfile } = useAppContext();
     const { params } = route;
     const { priceTable } = params;
 
@@ -47,7 +62,7 @@ const EditPriceTable = ({ route }: NativeStackScreenProps<SignUpStackParamList, 
 
     const form = useForm({
         resolver: zodResolver(schemaByPriceTableType[priceTable]),
-        defaultValues: valueByType[priceTable],
+        defaultValues: prepareValuesToInput(valueByType[priceTable]),
     });
 
     const { handleSubmit } = form;
@@ -67,6 +82,7 @@ const EditPriceTable = ({ route }: NativeStackScreenProps<SignUpStackParamList, 
         const updatedProfile = await updateProfile(payload);
 
         if (updatedProfile) {
+            setProfile(updatedProfile);
             goBack();
         }
     }

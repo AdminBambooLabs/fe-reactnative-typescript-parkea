@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from '@/components/Button';
+import { useAppContext } from '@/context/AppContext';
 import { useFetchProfile } from '@/hooks/useFetchProfile';
 import { useSignUpNavigation } from '@/hooks/useSignUpNavigation';
 import { ParkingInformation, parkingInformationSchema } from '@/schemas/signup/parkingInformations';
@@ -8,19 +9,25 @@ import { ParkingInformationsForm } from './Form';
 import * as Styled from './styles';
 
 const ParkingInformations = () => {
-    const { createProfile, isLoading } = useFetchProfile();
+    const { profile, setProfile } = useAppContext();
+    console.log('[profile]', profile);
+    const { updateProfile, isLoading } = useFetchProfile();
     const { navigate } = useSignUpNavigation();
 
     const form = useForm<ParkingInformation>({
         resolver: zodResolver(parkingInformationSchema),
+        defaultValues: profile!,
     });
 
     const { handleSubmit } = form;
 
     async function handleContinue(data: ParkingInformation) {
-        const profile = await createProfile(data);
+        const updatedProfile = await updateProfile({ profileData: data, profileId: profile?.id });
+        console.log('[handleContinue updatedProfile]', updatedProfile);
+        console.log('[data]', data);
 
-        if (profile) {
+        if (updatedProfile) {
+            setProfile(updatedProfile);
             navigate('ParkingBusinessHours');
         }
     }

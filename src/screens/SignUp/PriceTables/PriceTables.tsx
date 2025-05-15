@@ -1,21 +1,23 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect } from 'react';
 import { Button } from '@/components/Button';
 import { PriceTableCard } from '@/components/Card/PriceTableCard';
 import * as SPriceTable from '@/components/Card/PriceTableCard/styles';
 import { useAppContext } from '@/context/AppContext';
 import { useBottomSheetContext } from '@/context/BottomSheetContext/BottomSheetContext';
-import { useFetchProfile } from '@/hooks/useFetchProfile';
+import { useParkingResumeContext } from '@/context/ParkingResumeContext/ParkingResumeContext';
+import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 import { useSignUpNavigation } from '@/hooks/useSignUpNavigation';
 import { formatCurrencyBRL } from '@/utils/currency';
 import * as Styled from './styles';
 
 const PriceTables = () => {
-    const { profile, setProfile } = useAppContext();
+    const { profile } = useAppContext();
     console.log('[profile]', profile);
-    const { profile: profileData, fetchProfile } = useFetchProfile();
     const { navigate } = useSignUpNavigation();
+    const { reset } = useLocalNavigation();
+    const { pushToastToQueue } = useParkingResumeContext();
     const { handleOpenBottomSheet } = useBottomSheetContext();
+
+    const isButtonDisabled = !profile?.hourlyPrices || !profile?.diaristPrices || !profile?.monthlyPrices
 
     function handleContinue() {
         handleOpenBottomSheet({
@@ -23,22 +25,16 @@ const PriceTables = () => {
             description: 'Você pode editar as suas tabelas quando quiser acessando Perfil > Tabelas de preço',
             buttonProps: {
                 children: 'Próximo',
-                onPress: () => '',
+                onPress: () => {
+                    pushToastToQueue({ type: 'success', title: 'Cadastro realizado com sucesso.' });
+                    reset({
+                        index: 0,
+                        routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+                    });
+                },
             },
         });
     }
-
-    useFocusEffect(
-        useCallback(() => {
-            if (!profile) {
-                fetchProfile();
-            };
-        }, []),
-    );
-
-    useEffect(() => {
-        setProfile(profileData);
-    }, [profileData]);
 
     return (
         <Styled.Wrapper>
@@ -87,7 +83,7 @@ const PriceTables = () => {
             </Styled.Content>
 
             <Styled.ButtonsContainer>
-                <Button onPress={handleContinue}>
+                <Button onPress={handleContinue} disabled={isButtonDisabled}>
                     Próximo
                 </Button>
             </Styled.ButtonsContainer>

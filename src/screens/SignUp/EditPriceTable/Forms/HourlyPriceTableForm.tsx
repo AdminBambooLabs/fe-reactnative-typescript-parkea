@@ -4,6 +4,7 @@ import { HourlySchema } from '@/schemas/signup/editPriceTables';
 
 export const HourlyPriceTableForm = () => {
     const { formState, control } = useFormContext<HourlySchema>();
+    console.log('[formState]', formState);
 
     return (
         <>

@@ -1,7 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import { RootNavigationParamList } from '@/../App';
 import { TicketCard } from '@/components/Card/TicketCard';
 import { Label } from '@/components/Label';
 import { Toast } from '@/components/Toast';
@@ -13,7 +11,7 @@ import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 import { requestBluetoothPermissions } from '@/utils/bluetooth';
 import * as Styled from './styles';
 
-function ParkingResume({ }: NativeStackScreenProps<RootNavigationParamList, 'ParkingResume'>) {
+function ParkingResume() {
   const [currentToast, setCurrentToast] = useState<IToastQueue | null>(null);
 
   const { tickets, fetchTickets, isLoading } = useFetchTickets();

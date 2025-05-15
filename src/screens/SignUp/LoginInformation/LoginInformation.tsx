@@ -5,20 +5,52 @@ import { Button } from '@/components/Button';
 import { CheckBox } from '@/components/CheckBox';
 import { InputWithController } from '@/components/Input';
 import { Label } from '@/components/Label';
+import { useAppContext } from '@/context/AppContext';
+import { useAmplifyAuth } from '@/hooks/useAmplifyAuth';
+import { useCustomAsyncStorage } from '@/hooks/useCustomAsyncStorage';
+import { useFetchProfile } from '@/hooks/useFetchProfile';
+import { useSignUpNavigation } from '@/hooks/useSignUpNavigation';
 import { LoginInformationSchema, loginInformationSchema } from '@/schemas/signup/loginInformation';
+import { PROFILE_STORAGE_KEY } from '@/types/profile';
 import * as Styled from './styles';
 
 const LoginInformation = () => {
     const [termsAccepted, setTermsAccepted] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const { control, formState, watch, handleSubmit } = useForm<LoginInformationSchema>({
+    const { control, formState, watch, handleSubmit, setError } = useForm<LoginInformationSchema>({
         resolver: zodResolver(loginInformationSchema),
     });
 
+    const { navigate } = useSignUpNavigation();
+    const { signup } = useAmplifyAuth();
+    const { setProfile } = useAppContext();
+    const { createProfile } = useFetchProfile();
+    const { setValue } = useCustomAsyncStorage(PROFILE_STORAGE_KEY);
+
+
     const isButtonDisabled = Object.values(watch()).some(value => value === undefined || !value) || !!Object.keys(formState.errors).length || !termsAccepted;
 
-    function handleContinue(data: LoginInformationSchema) {
-        console.log('[data', data);
+    async function handleContinue(data: LoginInformationSchema) {
+        setLoading(true);
+        const loweredEmail = data.email.toLowerCase();
+        const signUpData = await signup(loweredEmail, data.password);
+
+        if (signUpData) {
+            const profileData = await createProfile({ email: loweredEmail, cognitoId: signUpData.userSub });
+
+            if (profileData) {
+                setProfile(profileData);
+                setValue(profileData.id);
+                navigate('RegisterCode');
+            } else {
+                setError('email', { message: 'Erro ao criar o usuário.' });
+            }
+        } else {
+            setError('email', { message: 'Usuário já cadastrado com esse endereço de e-mail.' });
+        }
+
+        setLoading(false);
     }
 
     return (
@@ -75,6 +107,7 @@ const LoginInformation = () => {
                 <Button
                     disabled={isButtonDisabled}
                     onPress={handleSubmit(handleContinue)}
+                    isLoading={loading}
                 >
                     Continuar
                 </Button>

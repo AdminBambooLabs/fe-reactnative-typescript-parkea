@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Controller, FieldValues } from 'react-hook-form';
+import { colors } from '@/theme/colors';
 import * as Styled from './styles';
 import { InputCurrencyProps, InputStatusStyles, InputWithControllerProps } from './types';
-import { colors } from '@/theme/colors';
 
 const InputCurrency = ({ icon, status, helperText, label, ...rest }: InputCurrencyProps) => {
   const [localStatus, setLocalStatus] = useState<InputStatusStyles>(status || 'idle');
@@ -62,7 +62,7 @@ export function InputCurrencyWithController<T extends FieldValues>({ controllerP
               decimalSeparator: ',',
               precision: 2,
             }}
-            value={String(value)}
+            value={value ? String(value) : undefined}
             onChangeText={(_, rawValue) => onChange(rawValue)}
           />
         );

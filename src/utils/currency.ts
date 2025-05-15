@@ -1,5 +1,5 @@
 export function formatCurrencyBRL(value: number | string): string {
-  const number = typeof value === 'string' ? parseFloat(value) : value;
+  const number = typeof value === 'string' ? parseFloat(value.replace('R$', '').trim()) : value;
 
   if (isNaN(number)) {
     return 'R$ 0,00';

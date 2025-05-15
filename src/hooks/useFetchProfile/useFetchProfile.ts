@@ -35,14 +35,14 @@ function useFetchProfile() {
     try {
       setIsLoading(true);
 
-      const payload: Partial<IProfile> = { ...profileData, email: 'teste@teste.com' };
+      const payload: Partial<IProfile> = { ...profileData };
       const createdProfile = await postProfile(payload);
 
       if (createdProfile.status === 201) {
         remove();
         setProfile(createdProfile.data);
         setValue(createdProfile.data.id);
-        return createdProfile;
+        return createdProfile.data;
       }
     } catch (err) {
       return null;
@@ -58,8 +58,10 @@ function useFetchProfile() {
 
     try {
       const id = profileId || value;
+      console.log('[id]', id);
       setIsLoading(true);
       const updatedProfile = await patchProfile({ profileData, profileId: id });
+      console.log('[updatedProfile]', updatedProfile);
 
       if (updatedProfile.status === 200) {
         return updatedProfile.data;
@@ -90,11 +92,11 @@ function useFetchProfile() {
     }
   }
 
-  useEffect(() => {
-    if (!profile) {
-      fetchProfile();
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   if (!profile) {
+  //     fetchProfile();
+  //   }
+  // }, [value]);
 
   return {
     fetchProfile,

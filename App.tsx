@@ -21,6 +21,8 @@ import { TicketResume } from '@/screens/Tickets/TicketResume';
 import { colors } from '@/theme/colors';
 import { ITicket } from '@/types/tickets';
 
+import './src/libs/amplify/amplifyConfig';
+
 export type NaviteStackParamList = {
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
   TicketDetails: { ticket: ITicket };
@@ -75,7 +77,7 @@ const BottomTabs = createBottomTabNavigator<BottomTabParamList>({
 });
 
 const RootStack = createNativeStackNavigator<NaviteStackParamList>({
-  initialRouteName: 'SignUp',
+  initialRouteName: 'BottomTabs',
   screenOptions: {
     contentStyle: {
       backgroundColor: colors.white,

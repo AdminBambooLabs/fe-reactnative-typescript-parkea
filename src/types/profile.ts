@@ -1,23 +1,24 @@
 export const PROFILE_STORAGE_KEY = 'profile';
 
 export interface IProfile {
-  id: string;
-  email: string;
-  name: string;
-  document: string;
-  contact: string;
-  street: string;
-  streetNumber: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  createdAt: Date;
-  updatedAt: Date;
+  id?: string;
+  email?: string;
+  name?: string;
+  document?: string;
+  contact?: string;
+  street?: string;
+  streetNumber?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  cognitoId?: string;
 
-  weekdayOpen: string;
-  weekdayClose: string;
-  weekendOpen: string;
-  weekendClose: string;
+  weekdayOpen?: string;
+  weekdayClose?: string;
+  weekendOpen?: string;
+  weekendClose?: string;
 
   hourlyPrices?: HourlyPrices;
   diaristPrices?: DiaristPrices;
