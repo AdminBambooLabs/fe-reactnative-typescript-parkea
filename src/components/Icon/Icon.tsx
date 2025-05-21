@@ -5,10 +5,10 @@ import AlertCircle from '@/assets/icons/alert-circle.svg';
 import AlertTriangle from '@/assets/icons/alert-triangle.svg';
 import CheckSquareBroken from '@/assets/icons/check-square-broken.svg';
 import Check from '@/assets/icons/check.svg';
+import EditPen from '@/assets/icons/edit-pen.svg';
 import EyeClose from '@/assets/icons/eye-close.svg';
 import EyeOpen from '@/assets/icons/eye-open.svg';
 import Search from '@/assets/icons/search.svg';
-import EditPen from '@/assets/icons/edit-pen.svg';
 
 import { Icons } from '@/assets/icons/types';
 

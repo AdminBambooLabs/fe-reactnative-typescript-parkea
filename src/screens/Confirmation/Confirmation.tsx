@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootNavigationParamList } from '@/../App';
+import { RootNavigationParamList } from '@/navigation/MainNavigator';
 import * as Styled from './styles';
 
 function Confirmation({ route }: NativeStackScreenProps<RootNavigationParamList, 'Confirmation'>) {

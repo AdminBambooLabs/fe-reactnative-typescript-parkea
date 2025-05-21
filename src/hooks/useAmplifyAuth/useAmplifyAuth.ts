@@ -22,10 +22,9 @@ function useAmplifyAuth() {
     try {
       const result = await Auth.confirmSignUp(username, confirmationCode);
 
-      console.log('[result]', result);
       return result;
     } catch (error) {
-      console.log('Error signing up:', error);
+      console.log('Error confirming sign up:', error);
       return null;
     }
   };
@@ -34,10 +33,27 @@ function useAmplifyAuth() {
     try {
       const result = await Auth.resendSignUp(username);
 
-      console.log('[result]', result);
       return result;
     } catch (error) {
-      console.log('Error signing up:', error);
+      console.log('Error resending code:', error);
+      return null;
+    }
+  };
+
+  const signIn = async (username: string, password: string) => {
+    console.log('[username]', username);
+    console.log('[password]', password);
+
+    try {
+      const result = await Auth.signIn({
+        username,
+        password,
+      });
+
+      console.log('[signIn]', result);
+      return result;
+    } catch (error) {
+      console.log('Error signing in:', error);
       return null;
     }
   };
@@ -46,6 +62,7 @@ function useAmplifyAuth() {
     signup,
     confirmSignUp,
     resendCode,
+    signIn,
   };
 }
 

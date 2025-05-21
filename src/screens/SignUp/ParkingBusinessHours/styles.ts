@@ -1,15 +1,19 @@
+import { StyleProp, ViewStyle } from 'react-native';
 import styled from 'styled-components/native';
 import { Button as CustomButton } from '@/components/Button';
 
-export const Wrapper = styled.View`
-  padding: 16px;
-  height: 100%;
-  justify-content: space-between;
-`;
+export const Wrapper = styled.ScrollView``;
 
 export const Content = styled.View`
-  margin-bottom: 24px;
+  flex: 1;
 `;
+
+export const contentContainerStyle: StyleProp<ViewStyle> = {
+  flexGrow: 1,
+  padding: 16,
+  justifyContent: 'space-between',
+  gap: 16,
+};
 
 export const TitleContainer = styled.View`
   gap: 12px;

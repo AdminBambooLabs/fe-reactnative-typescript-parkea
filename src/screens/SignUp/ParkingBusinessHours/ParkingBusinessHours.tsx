@@ -31,7 +31,7 @@ const ParkingBusinessHours = () => {
     }
 
     return (
-        <Styled.Wrapper>
+        <Styled.Wrapper contentContainerStyle={Styled.contentContainerStyle}>
             <Styled.Content>
                 <Styled.TitleContainer>
                     <Styled.Title>Horários de funcionamento</Styled.Title>

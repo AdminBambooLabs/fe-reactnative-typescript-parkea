@@ -33,7 +33,7 @@ const ParkingInformations = () => {
     }
 
     return (
-        <Styled.Wrapper>
+        <Styled.Wrapper contentContainerStyle={{ padding: 16 }}>
             <Styled.Content>
                 <Styled.TitleContainer>
                     <Styled.Title>Informação</Styled.Title>

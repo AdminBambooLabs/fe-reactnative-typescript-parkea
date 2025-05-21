@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import { Button as CustomButton } from '@/components/Button';
 
 export const Wrapper = styled.ScrollView`
-  padding: 16px;
   height: 100%;
 `;
 
@@ -32,9 +31,7 @@ export const Form = styled.View`
   gap: 16px;
 `;
 
-export const ButtonsContainer = styled.View`
-  margin-bottom: 48px;
-`;
+export const ButtonsContainer = styled.View``;
 
 export const CheckBoxContainer = styled.View`
   flex-direction: row;

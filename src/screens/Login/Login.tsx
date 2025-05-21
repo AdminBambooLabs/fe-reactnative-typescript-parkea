@@ -6,14 +6,16 @@ import { TouchableOpacity } from 'react-native';
 import { RootNavigationParamList } from '@/../App';
 import { Icon } from '@/components/Icon';
 import { InputWithController } from '@/components/Input';
+import { useAmplifyAuth } from '@/hooks/useAmplifyAuth';
 import { useLocalNavigation } from '@/hooks/useLocalNavigation';
 import { loginSchema } from '@/schemas/login';
 import { LoginSchema } from '@/schemas/login/schema';
 import * as Styled from './styles';
 
 function Login({ }: NativeStackScreenProps<RootNavigationParamList, 'ParkingResume'>) {
-  const [showPassword, setShowPassword] = useState(false);
   const { reset } = useLocalNavigation();
+  const { signIn } = useAmplifyAuth();
+
   const { control, handleSubmit: formHandleSubmit, formState } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -22,12 +24,15 @@ function Login({ }: NativeStackScreenProps<RootNavigationParamList, 'ParkingResu
     }
   });
 
-  function handleSubmit(data: LoginSchema) {
+  async function handleSubmit(data: LoginSchema) {
+    const signInResult = await signIn(data.email, data.password);
 
-    // reset({
-    //   index: 0,
-    //   routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
-    // })
+    if (signInResult) {
+      reset({
+        index: 0,
+        routes: [{ name: 'BottomTabs', params: { screen: 'Parking Resume' } }],
+      });
+    }
   }
 
   return (
@@ -53,7 +58,7 @@ function Login({ }: NativeStackScreenProps<RootNavigationParamList, 'ParkingResu
             label="Senha"
             placeholder="Digite sua senha"
             textContentType="password"
-            secureTextEntry={!showPassword}
+            secureTextEntry
             status={formState.errors.password ? 'error' : undefined}
             helperText={formState.errors.password ? 'Digite uma senha válida' : undefined}
             controllerProps={{

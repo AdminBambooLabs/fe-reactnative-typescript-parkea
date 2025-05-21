@@ -12,7 +12,7 @@ export const Backdrop = styled.Pressable`
   right: 0;
 `;
 
-export const Wrapper = styled(Animated.View) <BottomSheetStylesProps>`
+export const Wrapper = styled(Animated.View)<BottomSheetStylesProps>`
   position: absolute;
   bottom: 0;
   height: ${({ height }) => height}px;
@@ -21,8 +21,8 @@ export const Wrapper = styled(Animated.View) <BottomSheetStylesProps>`
 export const Content = styled.View`
   padding: 16px 16px 30px;
   background-color: ${({ theme }) => theme.colors.white};
-  height: 100%;
   align-items: center;
+  height: 100%;
   justify-content: space-between;
   border-top-right-radius: 24px;
   border-top-left-radius: 24px;

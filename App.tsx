@@ -1,140 +1,26 @@
 /* eslint-disable react-native/no-inline-styles */
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStaticNavigation, NavigatorScreenParams } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Buffer } from 'buffer';
+import { decode, encode } from 'base-64';
 import React from 'react';
+
 import { SafeAreaView } from 'react-native';
-
-import { HeaderTitle } from '@/components/Header/HeaderTitle';
-import { ParkingResumeHeader } from '@/components/Header/ParkingResumeHeader';
-import { TabBar } from '@/components/TabBar';
 import Providers from '@/context/Providers';
-import { SignUpStack } from '@/navigation/SignUpNavigator';
-import { Cashier } from '@/screens/Cashier';
-import { Confirmation, ConfirmationRouteProps } from '@/screens/Confirmation';
-import { Login } from '@/screens/Login';
-import { ParkingResume } from '@/screens/ParkingResume';
-import { TicketDetails, TicketDetailsDeleteButton } from '@/screens/Tickets/TicketDetails';
-import { TicketRegister } from '@/screens/Tickets/TicketRegister';
-import { TicketResume } from '@/screens/Tickets/TicketResume';
+import { MainNavigator } from '@/navigation/MainNavigator';
 
-import { colors } from '@/theme/colors';
-import { ITicket } from '@/types/tickets';
+import 'react-native-get-random-values';
+import '@ethersproject/shims';
+
+if (typeof global.Buffer === 'undefined') { global.Buffer = Buffer; }
+if (!global.btoa) { global.btoa = encode; }
+if (!global.atob) { global.atob = decode; }
 
 import './src/libs/amplify/amplifyConfig';
-
-export type NaviteStackParamList = {
-  BottomTabs: NavigatorScreenParams<BottomTabParamList>;
-  TicketDetails: { ticket: ITicket };
-  TicketResume: { ticket: ITicket };
-  Confirmation: ConfirmationRouteProps;
-  Login: undefined;
-  SignUp: undefined;
-};
-
-export type BottomTabParamList = {
-  ParkingResume: undefined;
-  TicketRegister: undefined;
-  Cashier: undefined;
-};
-
-export type RootNavigationParamList = NaviteStackParamList & BottomTabParamList;
-
-const BottomTabs = createBottomTabNavigator<BottomTabParamList>({
-  tabBar: (props) => <TabBar {...props} />,
-  screenOptions: {
-    sceneStyle: { backgroundColor: colors.white },
-    headerTitleAlign: 'center',
-    headerShadowVisible: false,
-    headerTitle: ({ children }) => (
-      <HeaderTitle>{children}</HeaderTitle>
-    ),
-  },
-  screens: {
-    ParkingResume: {
-      screen: ParkingResume,
-      options: {
-        title: 'Pátio',
-        header: (props) => <ParkingResumeHeader {...props} />,
-      },
-    },
-    TicketRegister: {
-      screen: TicketRegister,
-      options: {
-        title: 'Registrar',
-        headerTitle: () => (
-          <HeaderTitle>Registrar Entrada</HeaderTitle>
-        ),
-      },
-    },
-    Cashier: {
-      screen: Cashier,
-      options: {
-        title: 'Caixa',
-      },
-    },
-  },
-});
-
-const RootStack = createNativeStackNavigator<NaviteStackParamList>({
-  initialRouteName: 'BottomTabs',
-  screenOptions: {
-    contentStyle: {
-      backgroundColor: colors.white,
-    },
-    headerShadowVisible: false,
-    headerTitle: ({ children }) => (
-      <HeaderTitle>{children}</HeaderTitle>
-    ),
-  },
-  screens: {
-    SignUp: {
-      screen: SignUpStack,
-      options: {
-        headerShown: false,
-      },
-    },
-    Login: {
-      screen: Login,
-      options: {
-        headerShown: false,
-      },
-    },
-    BottomTabs: {
-      screen: BottomTabs,
-      options: {
-        headerShown: false,
-      },
-    },
-    TicketDetails: {
-      screen: TicketDetails,
-      options: {
-        title: 'Detalhe do veículo',
-        headerRight: () => <TicketDetailsDeleteButton />,
-      },
-    },
-    TicketResume: {
-      screen: TicketResume,
-      options: {
-        title: 'Resumo de saída',
-      },
-    },
-    Confirmation: {
-      screen: Confirmation,
-      options: {
-        headerShown: false,
-      },
-    },
-  },
-});
-
-const Navigation = createStaticNavigation(RootStack);
 
 function App(): React.JSX.Element {
   return (
     <Providers>
       <SafeAreaView style={{ flex: 1 }}>
-        <Navigation />
+        <MainNavigator />
       </SafeAreaView>
     </Providers>
   );
